@@ -1,55 +1,53 @@
 import { Request, Response } from "express";
-
-type SensorViewModel = {
-    id: string;
-    name: string;
-    temperature: number;
-    humidity: number;
-    updatedAt: string;
-};
+import { DatabaseInstance } from "../../infrastructure/database/in-memory/database.instance";
+import { ISensorReading } from "../../infrastructure/database/in-memory/in-memory-database";
 
 export class DashboardController {
     // dados fakes para testes
-    private getFakeSensors(): SensorViewModel[] {
-        return [
-            {
-                id: "sensor-1",
-                name: "Sensor 1",
-                temperature: 25,
-                humidity: 60,
-                updatedAt: new Date().toISOString()
-            },
-            {
-                id: "sensor-2",
-                name: "Sensor 2",
-                temperature: 31,
-                humidity: 55,
-                updatedAt: new Date().toISOString()
-            }
-        ];
+    private getFakeSensors(): ISensorReading[] {
+
+        const sensors = DatabaseInstance.db.sensors.getAll();
+
+        let reandings: ISensorReading[] = [];
+
+        for (const sensor of sensors) {
+            DatabaseInstance.db.readings.getBySensorId(sensor.id).length > 0 &&
+            reandings.push(
+                DatabaseInstance.db.readings.getBySensorId(sensor.id).slice(-1)[0]
+            );
+        }
+
+        console.log("Fake sensors readings:", reandings);
+
+        return reandings;
     }
 
     render(req: Request, res: Response) {
         const sensors = this.getFakeSensors();
 
+        const sensorsToTemplate = sensors.map(s => ({
+                id: s.sensor.id,
+                name: s.sensor.name,
+                temperature: s.temperature,
+                humidity: s.humidity
+            }))
+
+        console.log("Rendering dashboard with sensors:", sensorsToTemplate);
+
         // DustJS renderiza o template com dados iniciais (SSR)
         res.render("dashboard", {
             title: "Temperature Monitoring Dashboard",
-            sensors,
-            sensors_json: JSON.stringify(sensors)
+            sensors: sensorsToTemplate,
+            sensors_json: JSON.stringify(sensorsToTemplate)
         });
     }
 
     latest(req: Request, res: Response) {
         // TinyBone faz polling aqui
         // (depois deve ser retornado a leitura mais recente do banco)
-        const sensors = this.getFakeSensors().map(s => ({
-            ...s,
-            // para mostrar “mudanças” no dashboard
-            temperature: Math.round((s.temperature + Math.random() * 5) * 10) / 10,
-            humidity: Math.round((s.humidity + Math.random() * 5) * 10) / 10,
-            updatedAt: new Date().toISOString()
-        }));
+        const sensors = this.getFakeSensors();
+
+        console.log("Returning latest sensors readings via API:", sensors);
 
         res.json(sensors);
     }

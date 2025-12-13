@@ -1,9 +1,14 @@
 import amqp, { Channel } from "amqplib";
 import { logger } from "./logger";
+import {
+  EXCHANGES,
+  ROUTING_KEYS
+} from "./rabbitmq.constants";
+
+import * as dotenv from "dotenv";
+dotenv.config();
 
 let channel: Channel;
-
-const QUEUE_NAME = "sensor-readings";
 
 export async function connectRabbitMQ(): Promise<void> {
   try {
@@ -16,9 +21,17 @@ export async function connectRabbitMQ(): Promise<void> {
     const connection = await amqp.connect(url);
     channel = await connection.createChannel();
 
-    await channel.assertQueue(QUEUE_NAME, { durable: false });
+    // ✅ Exchange do tipo topic
+    await channel.assertExchange(
+      EXCHANGES.SENSOR_READINGS,
+      "topic",
+      { durable: true }
+    );
 
-    logger.info("Connected to RabbitMQ");
+    logger.info(
+      { exchange: EXCHANGES.SENSOR_READINGS },
+      "Connected to RabbitMQ (topic exchange)"
+    );
   }
   catch (error) {
     logger.fatal({ error }, "Failed to connect to RabbitMQ");
@@ -33,9 +46,22 @@ export function publishSensorReading(message: object) {
     }
 
     const payload = Buffer.from(JSON.stringify(message));
-    channel.sendToQueue(QUEUE_NAME, payload);
 
-    logger.info({ message }, "Sensor reading published");
+    channel.publish(
+      EXCHANGES.SENSOR_READINGS,
+      ROUTING_KEYS.SENSOR_READING_CREATED,
+      payload,
+      { persistent: true }
+    );
+
+    logger.info(
+      {
+        exchange: EXCHANGES.SENSOR_READINGS,
+        routingKey: ROUTING_KEYS.SENSOR_READING_CREATED,
+        message
+      },
+      "Sensor reading published"
+    );
   }
   catch (error) {
     logger.error({ error }, "Failed to publish sensor reading");

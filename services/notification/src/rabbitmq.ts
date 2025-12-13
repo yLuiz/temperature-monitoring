@@ -1,38 +1,72 @@
 import amqp, { Channel, ConsumeMessage } from "amqplib";
 import { logger } from "./logger";
+import {
+  EXCHANGES,
+  QUEUES,
+  ROUTING_KEYS
+} from "./rabbitmq.constants";
 
+
+import * as dotenv from "dotenv";
+dotenv.config();
 
 let channel: Channel;
 
-const QUEUE_NAME = "sensor-readings";
-
 export async function connectRabbitMQ(
-    onMessage: (payload: any) => Promise<void>
+  onMessage: (payload: any) => Promise<void>
 ): Promise<void> {
-    const url = process.env.RABBITMQ_URL;
+  const url = process.env.RABBITMQ_URL;
 
-    if (!url) {
-        throw new Error("RABBITMQ_URL not defined");
+  if (!url) {
+    throw new Error("RABBITMQ_URL not defined");
+  }
+
+  const connection = await amqp.connect(url);
+  channel = await connection.createChannel();
+
+  // Exchange do tipo topic
+  await channel.assertExchange(
+    EXCHANGES.SENSOR_READINGS,
+    "topic",
+    { durable: true }
+  );
+
+  // Fila específica do Notification Service
+  await channel.assertQueue(
+    QUEUES.NOTIFICATION,
+    { durable: false } 
+  );
+
+  // Bind da fila à exchange
+  await channel.bindQueue(
+    QUEUES.NOTIFICATION,
+    EXCHANGES.SENSOR_READINGS,
+    ROUTING_KEYS.SENSOR_READING_CREATED
+  );
+
+  await channel.consume(
+    QUEUES.NOTIFICATION,
+    async (msg: ConsumeMessage | null) => {
+      if (!msg) return;
+
+      try {
+        const payload = JSON.parse(msg.content.toString());
+        await onMessage(payload);
+
+        channel.ack(msg);
+      } catch (error) {
+        logger.error({ error }, "Failed to process message");
+        channel.nack(msg, false, false); // descarta mensagem
+      }
     }
+  );
 
-    const connection = await amqp.connect(url);
-    channel = await connection.createChannel();
-
-    await channel.assertQueue(QUEUE_NAME, { durable: false });
-
-    await channel.consume(QUEUE_NAME, async (msg: ConsumeMessage | null) => {
-        if (!msg) return;
-
-        try {
-            const payload = JSON.parse(msg.content.toString());
-            await onMessage(payload);
-
-            channel.ack(msg);
-        } catch (error) {
-            logger.error({ error }, "Failed to process message");
-            channel.nack(msg, false, false); // descarta mensagem
-        }
-    });
-
-    logger.info("Connected to RabbitMQ and waiting for messages");
+  logger.info(
+    {
+      exchange: EXCHANGES.SENSOR_READINGS,
+      queue: QUEUES.NOTIFICATION,
+      routingKey: ROUTING_KEYS.SENSOR_READING_CREATED
+    },
+    "Connected to RabbitMQ (topic exchange) and waiting for messages"
+  );
 }
