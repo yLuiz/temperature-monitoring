@@ -1,21 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sensor
+  name: postgres
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: sensor
+      app: postgres
   template:
     metadata:
       labels:
-        app: sensor
+        app: postgres
     spec:
       containers:
-        - name: sensor
-          image: sensor-service:latest
-          imagePullPolicy: IfNotPresent
+        - name: postgres
+          image: postgres:15
+          ports:
+            - containerPort: 5432
           envFrom:
             - configMapRef:
-                name: sensor-config
+                name: postgres-config

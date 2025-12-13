@@ -1,0 +1,53 @@
+version: "3.8"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: sensors
+      POSTGRES_USER: sensors
+      POSTGRES_PASSWORD: sensors
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build: ./services/api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - rabbitmq
+      - postgres
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: sensors
+      DB_USER: sensors
+      DB_PASSWORD: sensors
+      RABBITMQ_URL: amqp://rabbitmq:5672
+
+  sensor:
+    build: ./services/sensor
+    depends_on:
+      - rabbitmq
+    environment:
+      RABBITMQ_URL: amqp://rabbitmq:5672
+
+  notification:
+    build: ./services/notification
+    depends_on:
+      - rabbitmq
+    environment:
+      RABBITMQ_URL: amqp://rabbitmq:5672
+
+volumes:
+  postgres_data:
+
+
