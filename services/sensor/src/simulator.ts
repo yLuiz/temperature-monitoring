@@ -1,41 +1,21 @@
+import { envConfig } from "./config/envConfig";
 import { logger } from "./logger";
+import { ISensorReading } from "./models/sensor-reading.model";
 import { publishSensorReading } from "./rabbitmq";
+import { MockSensorsReading } from "./sensors.mock";
 
-const INTERVAL = Number(process.env.SENSOR_INTERVAL_MS) || 3000;
-
-function random(min: number, max: number): number {
-  return Math.round((Math.random() * (max - min) + min) * 10) / 10;
-}
+const INTERVAL = envConfig().SENSOR_INTERVAL_MS;
 
 export function startSensorSimulation() {
   logger.info("Starting sensor simulation");
 
   setInterval(() => {
-    const readings = [
-      {
-        sensorId: "sensor-1",
-        temperature: random(15, 35),
-        humidity: random(30, 80),
-        timestamp: new Date().toISOString()
-      },
-      {
-        sensorId: "sensor-2",
-        temperature: random(15, 35),
-        humidity: random(30, 80),
-        timestamp: new Date().toISOString()
-      },
-      {
-        sensorId: "sensor-3",
-        temperature: random(15, 35),
-        humidity: random(30, 80),
-        timestamp: new Date().toISOString()
-      }
-    ];
+    const readings: ISensorReading[] = MockSensorsReading.generate();
 
     for (const reading of readings) {
       logger.info({ reading }, "Simulated sensor reading");
       publishSensorReading(reading);
     }
-    
+
   }, INTERVAL);
 }

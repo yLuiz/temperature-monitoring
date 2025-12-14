@@ -16,6 +16,7 @@
     {#sensors}
     <li>
       <strong>{name}</strong><br />
+      Sensor CODE: {code} <br />
       Temp: <span class="temp">{temperature}</span> °C |
       Umid: <span class="hum">{humidity}</span> %<br />
       <small>ID: {id}</small>

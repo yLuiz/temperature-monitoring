@@ -27,7 +27,8 @@ export class DashboardController {
             id: s.sensor.id,
             name: s.sensor.name,
             temperature: s.temperature,
-            humidity: s.humidity
+            humidity: s.humidity,
+            sensorCode: s.sensor.sensorCode
         }))
 
         // DustJS renderiza o template com dados iniciais (SSR)
@@ -45,7 +46,8 @@ export class DashboardController {
             id: s.sensor.id,
             name: s.sensor.name,
             temperature: s.temperature,
-            humidity: s.humidity
+            humidity: s.humidity,
+            sensorCode: s.sensor.sensorCode
         }))
 
         res.json([...sensorsToTemplate]);

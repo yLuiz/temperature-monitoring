@@ -11,7 +11,7 @@ dotenv.config();
 
 // por enquanto, pode ser um handler simples
 type SensorReading = {
-  sensorId: string;
+  sensorCode: string;
   temperature: number;
   humidity: number;
   timestamp: string;

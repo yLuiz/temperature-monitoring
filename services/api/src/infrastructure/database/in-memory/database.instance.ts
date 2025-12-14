@@ -17,15 +17,16 @@ export class DatabaseInstance extends InMemoryDatabase {
 
     private _seedSensors() {
         const sensorsMock: ISensor[] = [
-            { id: "sensor-1", name: "Sensor 1" },
-            { id: "sensor-2", name: "Sensor 2" },
-            { id: "sensor-3", name: "Sensor 3" },
+            { id: "sensor-1", name: "Sensor 1", sensorCode: "SENSOR_001" },
+            { id: "sensor-2", name: "Sensor 2", sensorCode: "SENSOR_002" },
+            { id: "sensor-3", name: "Sensor 3", sensorCode: "SENSOR_003" },
         ];
 
         sensorsMock.forEach(sensorMock => {
             this.sensors.save({
                 id: sensorMock.id,
-                name: sensorMock.name
+                name: sensorMock.name,
+                sensorCode: sensorMock.sensorCode
             });
         });
     }
