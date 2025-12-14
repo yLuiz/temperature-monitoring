@@ -21,6 +21,9 @@ dashboardRoutes.get("/dashboard/*path", (req, res) => {
 // Endpoint “JSON” para o TinyBone fazer polling e atualizar a tela
 dashboardRoutes.get("/api/sensors/latest", (req, res) => controller.latest(req, res));
 
+dashboardRoutes.get("/api/latest-readings", (req, res) => controller.getLatestReadings(req, res));
+
+
 // Se nenhuma rota for encontrada, redireciona para o dashboard
 dashboardRoutes.get("/*path", (req, res) => {
     res.redirect("/dashboard");

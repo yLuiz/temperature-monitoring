@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <title>{title}</title>
+  <link rel="stylesheet" href="/public/styles/dashboard.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 
@@ -24,21 +25,11 @@
     {/sensors}
   </ul>
 
-  <!--incluir o TinyBone (lib) antes do script.
-      Opções:
-      - baixar e colocar em /public/js/vendor/tinybone.min.js
-      - usar CDN (mais rápido para testes)
-  -->
-  <!-- <script src="/public/js/vendor/base.js"></script> -->
-
-  <!-- script com a integração -->
   <script>
     // dados iniciais vindos do SSR (Dust)
     window.__INITIAL_SENSORS__ = { sensors_json };
   </script>
   <script src="/public/js/dashboard.js" defer></script>
-
-  <!-- <script src="/public/js/tinybone.js" defer></script> -->
 </body>
 
 </html>

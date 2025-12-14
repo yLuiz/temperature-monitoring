@@ -21,19 +21,19 @@ export class CreateSensors1765734466443 implements MigrationInterface {
                     isNullable: false
                 },
                 {
-                    name: "sensorCode",
+                    name: "sensor_code",
                     type: "varchar",
                     isUnique: true,
                     isNullable: false
                 },
                 {
-                    name: "createdAt",
+                    name: "created_at",
                     type: "timestamp",
                     default: "now()",
                     isNullable: false
                 },
                 {
-                    name: "updatedAt",
+                    name: "updated_at",
                     type: "timestamp",
                     default: "now()",
                     isNullable: false

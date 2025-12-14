@@ -1,3 +1,1 @@
-export class SensorDto {
-    
-}
+export class SensorDto {}

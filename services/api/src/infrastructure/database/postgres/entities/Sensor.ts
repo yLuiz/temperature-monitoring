@@ -18,7 +18,7 @@ export class Sensor {
         nullable: false,
         type: "varchar"
     })
-    sensorCode!: string;
+    sensor_code!: string;
     
     @Column({
         nullable: false,
@@ -30,8 +30,8 @@ export class Sensor {
     readings!: SensorReading[];
 
     @CreateDateColumn()
-    createdAt!: Date;
+    created_at!: Date;
 
     @UpdateDateColumn()
-    updatedAt!: Date;
+    updated_at!: Date;
 }

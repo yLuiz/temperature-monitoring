@@ -38,5 +38,5 @@ export class SensorReading {
   sensor_id!: string;
 
   @CreateDateColumn()
-  recordedAt!: Date;
+  recorded_at!: Date;
 }

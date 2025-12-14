@@ -31,7 +31,7 @@ export class CreateSensorReadings1765734496826 implements MigrationInterface {
                     isNullable: false
                 },
                 {
-                    name: "recordedAt",
+                    name: "recorded_at",
                     type: "timestamp",
                     default: "now()",
                     isNullable: false

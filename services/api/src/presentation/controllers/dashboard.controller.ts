@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { DatabaseInstance } from "../../infrastructure/database/in-memory/database.instance";
 import { ISensorReading } from "../../infrastructure/database/in-memory/in-memory-database";
+import { SensorRepositoryInstance } from "../../infrastructure/database/postgres/repositories/sensor.repository";
 
 export class DashboardController {
     // dados fakes para testes
@@ -18,6 +19,11 @@ export class DashboardController {
         }
 
         return reandings;
+    }
+
+    async getLatestReadings(req: Request, res: Response) {
+        const r = await SensorRepositoryInstance.getLatestSensorsReading()
+        res.json(r)
     }
 
     render(req: Request, res: Response) {
