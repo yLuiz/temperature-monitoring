@@ -1,10 +1,12 @@
 <!doctype html>
 <html lang="pt-br">
+
 <head>
   <meta charset="utf-8" />
   <title>{title}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
+
 <body>
   <h1>{title}</h1>
 
@@ -12,12 +14,12 @@
 
   <ul id="sensor-list">
     {#sensors}
-      <li>
-        <strong>{name}</strong><br/>
-        Temp: <span class="temp">{temperature}</span> °C |
-        Umid: <span class="hum">{humidity}</span> %<br/>
-        <small>ID: {id}</small>
-      </li>
+    <li>
+      <strong>{name}</strong><br />
+      Temp: <span class="temp">{temperature}</span> °C |
+      Umid: <span class="hum">{humidity}</span> %<br />
+      <small>ID: {id}</small>
+    </li>
     {/sensors}
   </ul>
 
@@ -26,14 +28,16 @@
       - baixar e colocar em /public/js/vendor/tinybone.min.js
       - usar CDN (mais rápido para testes)
   -->
-  <script src="https://unpkg.com/tinybone/tinybone.js"></script>
+  <!-- <script src="/public/js/vendor/base.js"></script> -->
 
   <!-- script com a integração -->
   <script>
     // dados iniciais vindos do SSR (Dust)
-    window.__INITIAL_SENSORS__ = {sensors_json};
+    window.__INITIAL_SENSORS__ = { sensors_json };
   </script>
+  <script src="/public/js/dashboard.js" defer></script>
 
-  <script src="/public/js/tinybone.js"></script>
+  <!-- <script src="/public/js/tinybone.js" defer></script> -->
 </body>
+
 </html>

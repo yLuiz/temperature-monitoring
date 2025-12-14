@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  rabbitmq-syos:
+    image: rabbitmq:3-management
+    container_name: rabbitmq-syos
+    ports:
+      - "5672:5672"     # AMQP
+      - "15672:15672"   # Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - syos-network
+
+  postgres-syos:
+    image: postgres:16
+    container_name: postgres-syos
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: syos_db
+      POSTGRES_USER: syos_user
+      POSTGRES_PASSWORD: syos_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - syos-network
+
+volumes:
+  rabbitmq_data:
+  postgres_data:
+
+networks:
+  syos-network:
+    driver: bridge

@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: sensor-config
 data:
-  RABBITMQ_URL: amqp://rabbitmq:5672
+  RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672
   SENSOR_INTERVAL_MS: "3000"

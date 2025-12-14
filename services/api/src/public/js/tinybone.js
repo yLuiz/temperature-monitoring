@@ -1,4 +1,5 @@
 (function () {
+  console.log("TinyBone sensor dashboard starting...");
   // Estado da tela
   const model = {
     sensors: Array.isArray(window.__INITIAL_SENSORS__) ? window.__INITIAL_SENSORS__ : [],
@@ -12,12 +13,14 @@
     const lastUpdated = document.getElementById("last-updated");
     if (!list || !lastUpdated) return;
 
+    console.log("Rendering sensor list...", model);
+
     lastUpdated.textContent = model.lastUpdated || "";
 
     list.innerHTML = model.sensors
       .map(s => `
         <li>
-          <strong>${s.name}</strong><br/>
+          <strong>${s.name} testes</strong><br/>
           Temp: <span class="temp">${s.temperature}</span> °C |
           Umid: <span class="hum">${s.humidity}</span> %<br/>
           <small>ID: ${s.id}</small>
@@ -34,10 +37,12 @@
 
   async function refresh() {
     try {
+      console.log("\n\nRefreshing sensors...\n\n");
       const res = await fetch("/api/sensors/latest");
       const data = await res.json();
-      model.sensors = data;
-      model.lastUpdated = new Date().toLocaleString();
+
+      tinybone.set(model, "sensors", data);
+      tinybone.set(model, "lastUpdated", new Date().toLocaleString());
     } catch (err) {
       console.error("Failed to refresh sensors", err);
     }
