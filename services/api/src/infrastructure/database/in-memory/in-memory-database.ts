@@ -55,9 +55,6 @@ export class InMemoryDatabase {
         },
 
         save: (reading: ISensorReading) => {
-
-            console.log("Saving reading:", reading);
-
             if (!this.db.readings[reading.sensorId]) {
                 this.db.readings[reading.sensorId] = [];
             }

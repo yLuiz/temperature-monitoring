@@ -12,12 +12,10 @@ export class DashboardController {
 
         for (const sensor of sensors) {
             DatabaseInstance.db.readings.getBySensorId(sensor.id).length > 0 &&
-            reandings.push(
-                DatabaseInstance.db.readings.getBySensorId(sensor.id).slice(-1)[0]
-            );
+                reandings.push(
+                    DatabaseInstance.db.readings.getBySensorId(sensor.id).slice(-1)[0]
+                );
         }
-
-        console.log("Fake sensors readings:", reandings);
 
         return reandings;
     }
@@ -26,13 +24,11 @@ export class DashboardController {
         const sensors = this.getFakeSensors();
 
         const sensorsToTemplate = sensors.map(s => ({
-                id: s.sensor.id,
-                name: s.sensor.name,
-                temperature: s.temperature,
-                humidity: s.humidity
-            }))
-
-        console.log("Rendering dashboard with sensors:", sensorsToTemplate);
+            id: s.sensor.id,
+            name: s.sensor.name,
+            temperature: s.temperature,
+            humidity: s.humidity
+        }))
 
         // DustJS renderiza o template com dados iniciais (SSR)
         res.render("dashboard", {
@@ -47,8 +43,13 @@ export class DashboardController {
         // (depois deve ser retornado a leitura mais recente do banco)
         const sensors = this.getFakeSensors();
 
-        console.log("Returning latest sensors readings via API:", sensors);
+        const sensorsToTemplate = sensors.map(s => ({
+            id: s.sensor.id,
+            name: s.sensor.name,
+            temperature: s.temperature,
+            humidity: s.humidity
+        }))
 
-        res.json(sensors);
+        res.json([...sensorsToTemplate]);
     }
 }
