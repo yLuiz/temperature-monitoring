@@ -4,7 +4,7 @@ import { ISensorReading } from "../../infrastructure/database/in-memory/in-memor
 
 export class DashboardController {
     // dados fakes para testes
-    private getFakeSensors(): ISensorReading[] {
+    private getReadings(): ISensorReading[] {
 
         const sensors = DatabaseInstance.db.sensors.getAll();
 
@@ -21,7 +21,7 @@ export class DashboardController {
     }
 
     render(req: Request, res: Response) {
-        const sensors = this.getFakeSensors();
+        const sensors = this.getReadings();
 
         const sensorsToTemplate = sensors.map(s => ({
             id: s.sensor.id,
@@ -39,9 +39,7 @@ export class DashboardController {
     }
 
     latest(req: Request, res: Response) {
-        // TinyBone faz polling aqui
-        // (depois deve ser retornado a leitura mais recente do banco)
-        const sensors = this.getFakeSensors();
+        const sensors = this.getReadings();
 
         const sensorsToTemplate = sensors.map(s => ({
             id: s.sensor.id,
