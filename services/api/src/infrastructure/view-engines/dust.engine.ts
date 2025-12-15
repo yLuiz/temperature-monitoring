@@ -1,7 +1,7 @@
-import { Express } from "express";
-import path from "path";
-import fs from "fs";
 import dust from "dustjs-linkedin";
+import { Express } from "express";
+import fs from "fs";
+import path from "path";
 
 /**
  * Cache simples de templates compilados
@@ -13,7 +13,7 @@ export function setupDustEngine(app: Express) {
   app.engine("dust", (filePath, options, callback) => {
     const templateName = path.basename(filePath);
 
-    // ✅ Usa cache se já compilado
+    // Usa cache compilado
     if (templateCache.has(templateName)) {
       return dust.render(templateName, options, callback);
     }

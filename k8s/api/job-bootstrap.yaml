@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: api-db-bootstrap
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: bootstrap
+          image: api-service-migration:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - sh
+            - -c
+            - |
+              echo "=== ENV VARS ==="
+              env | grep DB_
+
+              echo "=== RUN MIGRATIONS ==="
+              npm run migration:run
+
+              echo "=== RUN SEEDS ==="
+              node dist/infrastructure/database/postgres/seeds/run-seeds.js
+          envFrom:
+            - configMapRef:
+                name: api-config

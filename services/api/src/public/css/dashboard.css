@@ -1,0 +1,121 @@
+* {
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+body {
+  background: #f5f7fb;
+  margin: 0;
+  padding: 24px;
+  color: #111;
+}
+
+.header h1 {
+  margin: 0;
+}
+
+.updated {
+  color: #666;
+  font-size: 14px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.stat-card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.stat-card span {
+  font-size: 14px;
+  color: #666;
+}
+
+.stat-card strong {
+  display: block;
+  font-size: 26px;
+  margin-top: 8px;
+}
+
+.sensors {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.sensor-card {
+  padding: 30px;
+  border-radius: 14px;
+  background: #eafaf4;
+  border: #00c1a1 1px solid;
+}
+
+.sensor-card.warning {
+  background: #fff4e6;
+  border: #ff9800 2px solid;
+}
+
+.sensor-card header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sensor-card h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.code {
+  font-size: 12px;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+  border: #555 1px solid;
+  color: #555;
+  font-family: monospace, sans-serif;
+}
+
+.metric {
+  margin-top: 16px;
+}
+
+.metric label {
+  font-size: 14px;
+  color: #444;
+}
+
+.bar {
+  background: #ddd;
+  height: 8px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 6px 0;
+}
+
+.fill {
+  height: 100%;
+}
+
+.fill.temp {
+  background: #00c16a;
+}
+
+.sensor-card.warning .fill.temp {
+  background: #ff9800;
+}
+
+.fill.hum {
+  background: #2979ff;
+}
+
+.value {
+  font-size: 18px;
+}

@@ -7,7 +7,7 @@ type SensorReading = {
   timestamp: string;
 };
 
-// Limites simples (MVP)
+// Limites simples
 // Em um cenário real, isso viria da API ou banco
 const LIMITS = {
   temperature: {

@@ -7,11 +7,10 @@ import {
 import { logger } from "../logger/logger";
 
 import * as dotenv from "dotenv";
-dotenv.config();
+dotenv.config({ override: false });
 
-// por enquanto, pode ser um handler simples
-type SensorReading = {
-  sensorId: string;
+export type SensorReadingMessage = {
+  sensorCode: string;
   temperature: number;
   humidity: number;
   timestamp: string;
@@ -20,7 +19,7 @@ type SensorReading = {
 let channel: Channel;
 
 export async function startSensorReadingConsumer(
-  onMessage: (reading: SensorReading) => Promise<void>
+  onMessage: (reading: SensorReadingMessage) => Promise<void>
 ): Promise<void> {
   const url = process.env.RABBITMQ_URL;
 
@@ -59,7 +58,7 @@ export async function startSensorReadingConsumer(
       try {
         const payload = JSON.parse(
           msg.content.toString()
-        ) as SensorReading;
+        ) as SensorReadingMessage;
 
         await onMessage(payload);
         channel.ack(msg);

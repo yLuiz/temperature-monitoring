@@ -13,8 +13,6 @@
     const lastUpdated = document.getElementById("last-updated");
     if (!list || !lastUpdated) return;
 
-    console.log("Rendering sensor list...", model);
-
     lastUpdated.textContent = model.lastUpdated || "";
 
     list.innerHTML = model.sensors
@@ -37,7 +35,6 @@
 
   async function refresh() {
     try {
-      console.log("\n\nRefreshing sensors...\n\n");
       const res = await fetch("/api/sensors/latest");
       const data = await res.json();
 

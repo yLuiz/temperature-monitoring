@@ -4,15 +4,13 @@ import {
   EXCHANGES,
   ROUTING_KEYS
 } from "./rabbitmq.constants";
-
-import * as dotenv from "dotenv";
-dotenv.config();
+import { envConfig } from "./config/envConfig";
 
 let channel: Channel;
 
 export async function connectRabbitMQ(): Promise<void> {
   try {
-    const url = process.env.RABBITMQ_URL;
+    const url = envConfig().RABBITMQ_URL;
 
     if (!url) {
       throw new Error("RABBITMQ_URL not defined");

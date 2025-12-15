@@ -1,6 +1,7 @@
 export interface ISensor {
     id: string;
     name: string;
+    sensorCode: string;
 }
 
 export interface ISensorReading {
@@ -19,6 +20,7 @@ export interface IDatabase {
 export interface ISensorRepository {
     getAll(): ISensor[];
     getById(id: string): ISensor | undefined;
+    getByCode(sensorCode: string): ISensor | undefined;
     save(sensor: ISensor): void;
 }
 
@@ -37,6 +39,12 @@ export class InMemoryDatabase {
     public readonly sensors: ISensorRepository = {
         getAll: () => {
             return Object.values(this.db.sensors);
+        },
+
+        getByCode: (sensorCode: string) => {
+            return Object.values(this.db.sensors).find(
+                (sensor) => sensor.sensorCode === sensorCode
+            );
         },
 
         getById: (id: string) => {
