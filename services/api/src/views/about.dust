@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <title>Sobre - Sistema de Monitoramento</title>
   <meta name="description" content="Saiba mais sobre o sistema de monitoramento de temperatura" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/public/css/about.css" />
 </head>
 
@@ -78,4 +80,5 @@
 
   <script src="/public/js/about.js"></script>
 </body>
+
 </html>
