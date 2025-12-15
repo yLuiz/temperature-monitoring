@@ -15,6 +15,7 @@ kubectl delete -f k8s/sensor --ignore-not-found
 kubectl delete -f k8s/api --ignore-not-found
 kubectl delete -f k8s/postgres --ignore-not-found
 kubectl delete -f k8s/rabbitmq --ignore-not-found
+kubectl delete job api-db-bootstrap --ignore-not-found
 
 kind delete cluster --name $CLUSTER_NAME
 

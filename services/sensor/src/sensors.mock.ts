@@ -1,4 +1,4 @@
-import { ISensorReading } from "./models/sensor-reading.model";
+import { ISensorReadingToSend } from "./models/sensor-reading.model";
 import { random } from "./utils/random.util";
 
 
@@ -12,12 +12,12 @@ export class MockSensorsReading {
     ];
 
 
-    static generate(): ISensorReading[] {
+    static generate(): ISensorReadingToSend[] {
         const now = new Date();
-        const readings: ISensorReading[] = [];
+        const readings: ISensorReadingToSend[] = [];
 
         for (const sensor of new MockSensorsReading()._sensorsMock) {
-            const reading: ISensorReading = {
+            const reading: ISensorReadingToSend = {
                 sensorCode: sensor.sensorCode,
                 temperature: random(15, 35),
                 humidity: random(30, 80),

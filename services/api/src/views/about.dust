@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8" />
+  <title>{title}</title>
+  <link rel="stylesheet" href="/public/styles/dashboard.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body>
+  <h1>About Page</h1>
+  <p>{title}</p>
+  <p>Esta é uma página sobre o sistema de monitoramento de temperatura.</p>
+</body>
+
+</html>

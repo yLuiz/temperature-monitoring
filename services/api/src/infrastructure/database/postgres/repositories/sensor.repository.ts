@@ -38,7 +38,9 @@ class SensorRepository {
                 "sensor.readings",
                 "reading",
                 query
-            ).getMany();
+            )
+            .orderBy("sensor.created_at", "ASC")
+            .getMany();
     }
 
 

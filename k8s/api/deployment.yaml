@@ -21,3 +21,9 @@ spec:
           envFrom:
             - configMapRef:
                 name: api-config
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: api-secrets
+                  key: db-password

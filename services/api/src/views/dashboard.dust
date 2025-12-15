@@ -3,33 +3,71 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>{title}</title>
-  <link rel="stylesheet" href="/public/styles/dashboard.css" />
+  <title>Temperature Monitoring</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="stylesheet" href="/public/css/dashboard.css" />
 </head>
 
 <body>
-  <h1>{title}</h1>
 
-  <p>Última atualização: <span id="last-updated"></span></p>
+  <header class="header">
+    <h1>Temperature Monitoring</h1>
+    <p class="updated">
+      Última atualização:
+      <span id="last-updated">{lastUpdated}</span>
+    </p>
+  </header>
 
-  <ul id="sensor-list">
+  <section class="stats">
+    <div class="stat-card">
+      <span>Sensores Ativos</span>
+      <strong>{totalSensors}</strong>
+    </div>
+
+    <!-- <div class="stat-card">
+      <span>Temperatura Média</span>
+      <strong>{stats.avgTemperature}°C</strong>
+    </div>
+
+    <div class="stat-card">
+      <span>Umidade Média</span>
+      <strong>{stats.avgHumidity}%</strong>
+    </div> -->
+  </section>
+
+  <section class="sensors" id="sensor-list">
     {#sensors}
-    <li>
-      <strong>{name}</strong><br />
-      Sensor CODE: {code} <br />
-      Temp: <span class="temp">{temperature}</span> °C |
-      Umid: <span class="hum">{humidity}</span> %<br />
-      <small>ID: {id}</small>
-    </li>
+    <div class="sensor-card {status}">
+      <header>
+        <h2>{name}</h2>
+        <span class="code">{sensorCode}</span>
+      </header>
+
+      <div class="metric">
+        <label>Temperatura</label>
+        <div class="bar">
+          <!-- <div class="fill temp" style="width:{temperaturePercent}%"></div> -->
+        </div>
+        <strong class="value">{temperature}°C</strong>
+      </div>
+
+      <div class="metric">
+        <label>Umidade</label>
+        <div class="bar">
+          <!-- <div class="fill hum" style="width:{humidity}%"></div> -->
+        </div>
+        <strong class="value">{humidity}%</strong>
+      </div>
+    </div>
     {/sensors}
-  </ul>
+  </section>
 
   <script>
-    // dados iniciais vindos do SSR (Dust)
-    window.__INITIAL_SENSORS__ = { sensors_json };
+    window.__INITIAL_SENSORS__ = [];
   </script>
-  <script src="/public/js/dashboard.js" defer></script>
+
+  <script src="/public/js/dashboard.js"></script>
 </body>
 
 </html>
