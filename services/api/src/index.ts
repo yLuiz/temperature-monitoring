@@ -11,7 +11,7 @@ import { runRabbitMQConsumers } from "./infrastructure/messaging/run-rabbitmq-co
     await runRabbitMQConsumers();
     
     app.listen(port, () => {
-      console.log(`✅ API running on http://localhost:${port}/dashboard`);
+      console.log(`[SUCCESS] >>> API running on http://localhost:${port}/dashboard <<<`);
     });
   } catch (error) {
     console.error(error);
