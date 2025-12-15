@@ -40,7 +40,7 @@ kind version
 
 ### 1️⃣ Clonar o repositório
 
-git clone <url-do-repositorio>  
+git clone https://github.com/yLuiz/temperature-monitoring.git
 cd temperature-monitoring  
 
 ---
