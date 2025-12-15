@@ -8,7 +8,7 @@ import {
 
 
 import * as dotenv from "dotenv";
-dotenv.config();
+dotenv.config({ override: false });
 
 let channel: Channel;
 

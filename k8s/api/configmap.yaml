@@ -5,6 +5,7 @@ metadata:
 data:
   DB_HOST: postgres
   DB_PORT: "5432"
-  DB_NAME: sensors
-  DB_USER: sensors
+  DB_NAME: sensors # Dados de exemplo, não use em produção.
+  DB_USER: sensors # Dados de exemplo, não use em produção.
+  DB_PASSWORD: sensors # Dados de exemplo, não use em produção.
   RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672

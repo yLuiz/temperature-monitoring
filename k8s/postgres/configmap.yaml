@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: postgres-config
 data:
-  POSTGRES_DB: sensors
-  POSTGRES_USER: sensors
-  POSTGRES_PASSWORD: sensors
+  POSTGRES_DB: sensors # Dados de exemplo, não use em produção.
+  POSTGRES_USER: sensors # Dados de exemplo, não use em produção.
+  POSTGRES_PASSWORD: sensors # Dados de exemplo, não use em produção.

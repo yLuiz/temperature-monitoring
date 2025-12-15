@@ -1,17 +1,81 @@
-<!doctype html>
-<html lang="pt-br">
-
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <title>{title}</title>
-  <link rel="stylesheet" href="/public/styles/dashboard.css" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <title>Sobre - Sistema de Monitoramento</title>
+  <meta name="description" content="Saiba mais sobre o sistema de monitoramento de temperatura" />
+  <link rel="stylesheet" href="/public/css/about.css" />
 </head>
 
 <body>
-  <h1>About Page</h1>
-  <p>{title}</p>
-  <p>Esta é uma página sobre o sistema de monitoramento de temperatura.</p>
-</body>
+  <div class="page">
+    <div class="container">
 
+      <!-- Header -->
+      <header class="header">
+        <span class="badge">Sobre o Sistema</span>
+        <h1>Sistema de Monitoramento de Temperatura</h1>
+        <p class="subtitle">
+          Monitoramento em tempo real para garantir a segurança e eficiência
+        </p>
+      </header>
+
+      <!-- Cards -->
+      <section class="grid">
+
+        <div class="card">
+          <div class="card-header">
+            <h2>O que fazemos</h2>
+            <span class="card-description">Nossa missão</span>
+          </div>
+          <div class="card-content">
+            <p>
+              Oferecemos uma solução completa de monitoramento de temperatura em tempo real,
+              permitindo acompanhar e controlar as condições ambientais com precisão e facilidade.
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2>Recursos</h2>
+            <span class="card-description">Funcionalidades principais</span>
+          </div>
+          <div class="card-content">
+            <ul class="feature-list">
+              <li>Monitoramento em tempo real</li>
+              <li>Alertas personalizados</li>
+              <li>Histórico de dados</li>
+              <li>Interface intuitiva</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card full">
+          <div class="card-header">
+            <h2>Tecnologia</h2>
+            <span class="card-description">Construído com as melhores ferramentas</span>
+          </div>
+          <div class="card-content">
+            <p>
+              Utilizamos tecnologias modernas e confiáveis para garantir performance, segurança e
+              escalabilidade. A plataforma é desenvolvida com Node.js, DustJS e outras tecnologias modernas.
+            </p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Footer -->
+      <div class="card dashed">
+        <p class="footer-text">
+          Para mais informações, entre em contato com nossa equipe de suporte.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="/public/js/about.js"></script>
+</body>
 </html>

@@ -7,7 +7,7 @@ import {
 import { logger } from "../logger/logger";
 
 import * as dotenv from "dotenv";
-dotenv.config();
+dotenv.config({ override: false });
 
 export type SensorReadingMessage = {
   sensorCode: string;

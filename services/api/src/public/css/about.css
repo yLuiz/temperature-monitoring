@@ -1,0 +1,103 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(to bottom, #ffffff, #f5f5f5);
+    color: #111;
+}
+
+.page {
+    min-height: 100vh;
+    padding: 24px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 0;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.badge {
+    display: inline-block;
+    background: #e5e7eb;
+    color: #111;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+
+.header h1 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    font-size: 18px;
+    color: #666;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.card.full {
+    grid-column: 1 / -1;
+}
+
+.card.dashed {
+    border-style: dashed;
+    margin-top: 40px;
+}
+
+.card-header h2 {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.card-description {
+    font-size: 13px;
+    color: #888;
+}
+
+.card-content p,
+.feature-list li {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #555;
+}
+
+.feature-list {
+    list-style: none;
+}
+
+.feature-list li::before {
+    content: "•";
+    color: #2563eb;
+    margin-right: 8px;
+}
+
+.footer-text {
+    text-align: center;
+    font-size: 13px;
+    color: #666;
+}

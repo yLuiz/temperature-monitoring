@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 import { DataSource, DataSourceOptions } from "typeorm";
 import { SeederOptions } from "typeorm-extension";
 import { SensorReading } from "./entities/SensorReadings";
-dotenv.config();
+dotenv.config({ override: false });
 
 export const AppDataSource = new DataSource({
     type: "postgres",
