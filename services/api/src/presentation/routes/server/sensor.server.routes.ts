@@ -5,6 +5,4 @@ export const sensorServerRoutes = Router();
 
 const controller = new SensorServerController();
 
-sensorServerRoutes.get("/", (req, res) => {
-    res.json({ message: "Sensor Server Routes" });
-});
+sensorServerRoutes.get("/", (req, res) => controller.getSensorData(req, res));
