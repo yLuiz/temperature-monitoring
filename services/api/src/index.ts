@@ -1,5 +1,6 @@
 import app from "./app";
 import { initDatabase } from "./infrastructure/database/init-database";
+import { logger } from "./infrastructure/logger/logger";
 import { runRabbitMQConsumers } from "./infrastructure/messaging/run-rabbitmq-consumers";
 
 
@@ -11,7 +12,7 @@ import { runRabbitMQConsumers } from "./infrastructure/messaging/run-rabbitmq-co
     await runRabbitMQConsumers();
     
     app.listen(port, () => {
-      console.log(`[SUCCESS] >>> API running on http://localhost:${port}/dashboard <<<`);
+      logger.info(`[SUCCESS] >>> API running on http://localhost:${port}/dashboard <<<`);
     });
   } catch (error) {
     console.error(error);
