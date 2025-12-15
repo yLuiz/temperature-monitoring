@@ -58,7 +58,7 @@ kubectl apply -f k8s/api/job-bootstrap.yaml
 kubectl logs -f job/api-db-bootstrap
 
 Write-Host "[KUBERNETES INFO] WAIT - Waiting for DB bootstrap job to finish..."
-kubectl wait --for=condition=complete job/api-db-bootstrap --timeout=60s
+kubectl wait --for=condition=complete job/api-db-bootstrap --timeout=180s
 
 Write-Host "[KUBERNETES INFO] LOGS - DB bootstrap job logs:"
 kubectl logs job/api-db-bootstrap
