@@ -19,7 +19,7 @@ export async function connectRabbitMQ(): Promise<void> {
     const connection = await amqp.connect(url);
     channel = await connection.createChannel();
 
-    // ✅ Exchange do tipo topic
+    // Exchange do tipo topic
     await channel.assertExchange(
       EXCHANGES.SENSOR_READINGS,
       "topic",
@@ -32,7 +32,7 @@ export async function connectRabbitMQ(): Promise<void> {
     );
   }
   catch (error) {
-    logger.fatal({ error }, "Failed to connect to RabbitMQ");
+    logger.fatal(error, "Failed to connect to RabbitMQ");
     throw error;
   }
 }
@@ -62,7 +62,7 @@ export function publishSensorReading(message: object) {
     );
   }
   catch (error) {
-    logger.error({ error }, "Failed to publish sensor reading");
+    logger.error(error, "Failed to publish sensor reading");
     throw error;
   }
 }

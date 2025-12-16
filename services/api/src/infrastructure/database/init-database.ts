@@ -7,7 +7,7 @@ export async function initDatabase() {
         logger.info("Database connected");
     }
     catch (error) {
-        logger.error({ error }, "Error during Data Source initialization:");
+        logger.error(error, "Error during Data Source initialization:");
         throw error;
     }
 }

@@ -55,7 +55,7 @@ export async function connectRabbitMQ(
 
         channel.ack(msg);
       } catch (error) {
-        logger.error({ error }, "Failed to process message");
+        logger.error(error, "Failed to process message");
         channel.nack(msg, false, false); // descarta mensagem
       }
     }

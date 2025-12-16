@@ -64,7 +64,7 @@ export async function startSensorReadingConsumer(
         channel.ack(msg);
       } catch (error) {
         logger.error(
-          { error },
+          error,
           "Failed to process sensor reading"
         );
         channel.nack(msg, false, false);

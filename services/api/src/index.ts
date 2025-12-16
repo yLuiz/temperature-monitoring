@@ -15,7 +15,7 @@ import { runRabbitMQConsumers } from "./infrastructure/messaging/run-rabbitmq-co
       logger.info(`[SUCCESS] >>> API running on http://localhost:${port}/dashboard <<<`);
     });
   } catch (error) {
-    console.error(error);
+    logger.error(error, "[FATAL] >>> Failed to start API <<<");
     process.exit(1);
   }
 })();

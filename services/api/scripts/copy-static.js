@@ -18,4 +18,4 @@ const root = path.join(__dirname, "..");
 copyDir(path.join(root, "src", "views"), path.join(root, "dist", "views"));
 copyDir(path.join(root, "src", "public"), path.join(root, "dist", "public"));
 
-console.log("✅ Copied views/ and public/ to dist/");
+console.log("Copied views/ and public/ to dist/");
