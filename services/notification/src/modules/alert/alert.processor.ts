@@ -1,4 +1,4 @@
-import { logger } from "./logger";
+import { logger } from "../logger/logger";
 
 type SensorReading = {
   sensorId: string;

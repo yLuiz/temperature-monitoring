@@ -1,8 +1,9 @@
-import { envConfig } from "./config/envConfig";
-import { logger } from "./logger";
-import { ISensorReadingToSend } from "./models/sensor-reading.model";
-import { publishSensorReading } from "./rabbitmq";
-import { MockSensorsReading } from "./sensors.mock";
+
+import { envConfig } from "../../config/envConfig";
+import { MockSensorsReading } from "../../mocks/sensors.mock";
+import { ISensorReadingToSend } from "../../models/sensor-reading.model";
+import { logger } from "../logger/logger";
+import { publishSensorReading } from "../messaging/rabbitmq";
 
 const INTERVAL = envConfig().SENSOR_INTERVAL_MS;
 

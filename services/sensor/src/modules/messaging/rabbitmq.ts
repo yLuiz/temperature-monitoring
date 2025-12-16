@@ -1,10 +1,12 @@
 import amqp, { Channel } from "amqplib";
-import { logger } from "./logger";
+
+import { envConfig } from "../../config/envConfig";
+import { logger } from "../logger/logger";
 import {
   EXCHANGES,
   ROUTING_KEYS
 } from "./rabbitmq.constants";
-import { envConfig } from "./config/envConfig";
+
 
 let channel: Channel;
 

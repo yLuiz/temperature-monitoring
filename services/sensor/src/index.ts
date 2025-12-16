@@ -1,7 +1,6 @@
-import { logger } from "./logger";
-import { connectRabbitMQ } from "./rabbitmq";
-import { startSensorSimulation } from "./simulator";
-
+import { logger } from "./modules/logger/logger";
+import { connectRabbitMQ } from "./modules/messaging/rabbitmq";
+import { startSensorSimulation } from "./modules/simulator/simulator";
 (async function bootstrap() {
   try {
 

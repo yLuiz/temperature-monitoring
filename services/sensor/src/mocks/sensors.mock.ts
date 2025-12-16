@@ -1,7 +1,5 @@
-import { ISensorReadingToSend } from "./models/sensor-reading.model";
-import { random } from "./utils/random.util";
-
-
+import { ISensorReadingToSend } from "../models/sensor-reading.model";
+import { random } from "../utils/random.util";
 
 export class MockSensorsReading {
 
