@@ -42,7 +42,8 @@
       document.getElementById("last-updated").textContent =
         new Date().toLocaleString();
 
-    } catch (err) {
+    }
+    catch (err) {
       console.error("Erro ao atualizar sensores", err);
     }
   }

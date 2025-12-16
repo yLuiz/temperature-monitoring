@@ -14,6 +14,14 @@ body {
   margin: 0;
 }
 
+.link-route {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 14px;
+  color: #2979ff;
+  text-decoration: none;
+}
+
 .updated {
   color: #666;
   font-size: 14px;

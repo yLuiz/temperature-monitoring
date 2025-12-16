@@ -6,13 +6,17 @@
   <title>Temperature Monitoring</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <link rel="stylesheet" href="/public/css/toast.css">
   <link rel="stylesheet" href="/public/css/dashboard.css" />
 </head>
 
 <body>
 
+  <div id="toast-container"></div>
+
   <header class="header">
     <h1>Temperature Monitoring</h1>
+    <a class="link-route" href="/about">Sobre o Sistema</a>
     <p class="updated">
       Última atualização:
       <span id="last-updated">{lastUpdated}</span>
@@ -67,6 +71,7 @@
     window.__INITIAL_SENSORS__ = [];
   </script>
 
+  <script src="/public/js/toast.js"></script>
   <script src="/public/js/dashboard.js"></script>
 </body>
 
