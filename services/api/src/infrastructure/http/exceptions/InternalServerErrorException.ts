@@ -1,5 +1,5 @@
-import { HttpStatus } from "../enum/HttpStatus";
-import { HttpStatusCode } from "../enum/HttpStatusCode";
+import { HttpStatus } from "../enums/HttpStatus";
+import { HttpStatusCode } from "../enums/HttpStatusCode";
 import { HttpException } from "./HttpException";
 
 export class InternalServerErrorException extends HttpException {

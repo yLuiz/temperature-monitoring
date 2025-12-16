@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { HttpException } from '../exceptions/HttpException';
 import { logger } from '../../logger/logger';
-import { HttpStatus } from '../enum/HttpStatus';
-import { HttpStatusCode } from '../enum/HttpStatusCode';
+import { HttpStatus } from '../enums/HttpStatus';
+import { HttpStatusCode } from '../enums/HttpStatusCode';
 
 interface ErrorResponse {
   statusCode: number;

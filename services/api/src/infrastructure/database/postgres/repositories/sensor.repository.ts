@@ -1,9 +1,8 @@
 import { Repository } from "typeorm";
-import { AppDataSource } from "../data-source";
-import { Sensor } from "../entities/Sensor";
 import { CreateSensorInterface } from "../../../../application/interfaces/sensor/create-sensor.interface";
 import { UpdateSensorInterface } from "../../../../application/interfaces/sensor/update-sensor.interface";
-import { NotFoundException } from "../../../http/exceptions/NotFoundException";
+import { AppDataSource } from "../data-source";
+import { Sensor } from "../entities/Sensor";
 
 class SensorRepository {
     private _sensorOrmRepository: Repository<Sensor>;

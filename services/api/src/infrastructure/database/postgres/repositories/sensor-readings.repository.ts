@@ -1,8 +1,8 @@
 import { Repository } from "typeorm";
-import { AppDataSource } from "../data-source";
-import { SensorReading } from "../entities/SensorReadings";
 import { CreateSensorReadingInterface } from "../../../../application/interfaces/sensor-reading/create-sensor-reading.interface";
 import { UpdateSensorReadingInterface } from "../../../../application/interfaces/sensor-reading/update-sensor-reading.interface";
+import { AppDataSource } from "../data-source";
+import { SensorReading } from "../entities/SensorReadings";
 
 class SensorReadingsRepository {
 
