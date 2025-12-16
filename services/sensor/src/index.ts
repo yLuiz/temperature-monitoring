@@ -1,6 +1,7 @@
 import { ISensor, MockSensorsReading } from "./mocks/sensors.mock";
 import { logger } from "./modules/logger/logger";
-import { connectRabbitMQ, consumeSensors } from "./modules/messaging/rabbitmq";
+import { consumeSensorListUpdated } from "./modules/messaging/consume-sensor-list-updated";
+import { askForSensorListUpdate, connectRabbitMQ, consumeSensors } from "./modules/messaging/rabbitmq";
 import { startSensorSimulation } from "./modules/simulator/simulator";
 (async function bootstrap() {
   try {
@@ -10,11 +11,9 @@ import { startSensorSimulation } from "./modules/simulator/simulator";
     await connectRabbitMQ();
     logger.info(">>> Sensor Service started successfully :D <<<");
 
+    askForSensorListUpdate();
     startSensorSimulation();
-    consumeSensors(async (message: { sensors: ISensor[] }) => {
-      MockSensorsReading.sensors = message.sensors;
-      console.log("Message processed", message);
-    });
+    consumeSensorListUpdated();
   } catch (error) {
     logger.fatal(error, ">>> Failed to start Sensor Service :( <<<");
     process.exit(1);

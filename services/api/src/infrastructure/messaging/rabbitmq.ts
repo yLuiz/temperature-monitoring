@@ -47,6 +47,14 @@ export async function connectRabbitMQ(): Promise<void> {
 
     channel.prefetch(10);
 
+    await channel.assertQueue(QUEUES.SENSOR_LIST, { durable: true });
+
+    await channel.bindQueue(
+      QUEUES.SENSOR_LIST,
+      EXCHANGES.SENSORS,
+      ROUTING_KEYS.SENSOR_LIST_REQUEST,
+    );
+
     logger.info("Connected to RabbitMQ");
   } catch (error) {
     logger.fatal(error, "Failed to connect to RabbitMQ");
@@ -116,5 +124,36 @@ export async function publishSensorListUpdated(
   logger.info(
     { count: payload.sensors.length },
     "Sensor list updated published"
+  );
+}
+
+export function consumeSensorListRequest(
+  onMessage: (payload: any) => Promise<void>
+): void {
+  if (!channel) {
+    throw new Error("RabbitMQ channel not initialized");
+  }
+
+  channel.consume(
+    QUEUES.SENSOR_LIST,
+    async (msg: ConsumeMessage | null) => {
+      if (!msg) return;
+      try {
+        const content = JSON.parse(msg.content.toString());
+        logger.info(
+          {
+            exchange: EXCHANGES.SENSORS,
+            routingKey: ROUTING_KEYS.SENSOR_LIST_REQUEST,
+          },
+          "Sensor list request consumed"
+        );
+
+        await onMessage(content);
+        channel.ack(msg);
+      } catch (error) {
+        logger.error(error, "Failed to process sensor list request");
+        channel.nack(msg, false, false); // DLQ futuramente
+      }
+    }
   );
 }
