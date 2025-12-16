@@ -1,20 +1,23 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
 
-ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-cd "$ROOT_DIR"
+set -e
 
 CLUSTER_NAME="temp-monitoring"
 
-echo "[KUBERNETES INFO] CLEAN - Cleaning Kubernetes resources..."
+# Resolve project root
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$ROOT_DIR"
 
-kubectl delete -f k8s/notification || true
-kubectl delete -f k8s/sensor || true
-kubectl delete -f k8s/api || true
-kubectl delete -f k8s/postgres || true
-kubectl delete -f k8s/rabbitmq || true
+# Delete Kubernetes resources
+kubectl delete -f k8s/notification --ignore-not-found
+kubectl delete -f k8s/sensor --ignore-not-found
+kubectl delete -f k8s/api --ignore-not-found
+kubectl delete -f k8s/postgres --ignore-not-found
+kubectl delete -f k8s/rabbitmq --ignore-not-found
+kubectl delete job api-db-bootstrap --ignore-not-found
 
-echo "[KUBERNETES INFO] DELETE - Deleting kind cluster..."
-kind delete cluster --name $CLUSTER_NAME || true
+# Delete Kind cluster
+kind delete cluster --name "$CLUSTER_NAME"
 
-echo "[OK] Environment cleaned"
+echo "[OK] Kubernetes environment is down"
