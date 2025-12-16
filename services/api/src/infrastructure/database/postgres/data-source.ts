@@ -6,15 +6,16 @@ import dotenv from "dotenv";
 import { DataSource, DataSourceOptions } from "typeorm";
 import { SeederOptions } from "typeorm-extension";
 import { SensorReading } from "./entities/SensorReadings";
+import { envConfig } from "../../../config/envConfig";
 dotenv.config({ override: false });
 
 export const AppDataSource = new DataSource({
     type: "postgres",
-    host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT),
-    username: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+    host: envConfig().DB_HOST,
+    port: envConfig().DB_PORT,
+    username: envConfig().DB_USER,
+    password: envConfig().DB_PASSWORD,
+    database: envConfig().DB_NAME,
     entities: [Sensor, SensorReading],
     migrations: ["dist/infrastructure/database/postgres/migrations/*.{js,ts}"],
     seeds: ["dist/infrastructure/database/postgres/seeds/*.{js,ts}"],

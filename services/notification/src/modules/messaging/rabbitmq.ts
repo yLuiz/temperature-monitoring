@@ -1,21 +1,18 @@
 import amqp, { Channel, ConsumeMessage } from "amqplib";
-import { logger } from "./logger";
+import { envConfig } from "../../config/envConfig";
+import { logger } from "../logger/logger";
 import {
   EXCHANGES,
   QUEUES,
   ROUTING_KEYS
 } from "./rabbitmq.constants";
 
-
-import * as dotenv from "dotenv";
-dotenv.config({ override: false });
-
 let channel: Channel;
 
 export async function connectRabbitMQ(
   onMessage: (payload: any) => Promise<void>
 ): Promise<void> {
-  const url = process.env.RABBITMQ_URL;
+  const url = envConfig().RABBITMQ_URL;
 
   if (!url) {
     throw new Error("RABBITMQ_URL not defined");

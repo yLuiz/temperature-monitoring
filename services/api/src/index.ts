@@ -1,4 +1,5 @@
 import app from "./app";
+import { envConfig } from "./config/envConfig";
 import { initDatabase } from "./infrastructure/database/init-database";
 import { logger } from "./infrastructure/logger/logger";
 import { runRabbitMQConsumers } from "./infrastructure/messaging/run-rabbitmq-consumers";
@@ -6,7 +7,7 @@ import { runRabbitMQConsumers } from "./infrastructure/messaging/run-rabbitmq-co
 
 (async function bootstrap() {
   try {
-    const port = process.env.PORT ? Number(process.env.PORT) : 3000;
+    const port = envConfig().PORT ? Number(envConfig().PORT) : 3000;
 
     await initDatabase();
     await runRabbitMQConsumers();

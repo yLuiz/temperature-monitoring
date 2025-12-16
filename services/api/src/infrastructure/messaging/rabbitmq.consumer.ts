@@ -1,12 +1,13 @@
 import amqp, { Channel, ConsumeMessage } from "amqplib";
+import { logger } from "../logger/logger";
 import {
   EXCHANGES,
   QUEUES,
   ROUTING_KEYS,
 } from "./rabbitmq.constants";
-import { logger } from "../logger/logger";
 
 import * as dotenv from "dotenv";
+import { envConfig } from "../../config/envConfig";
 dotenv.config({ override: false });
 
 export type SensorReadingMessage = {
@@ -21,7 +22,7 @@ let channel: Channel;
 export async function startSensorReadingConsumer(
   onMessage: (reading: SensorReadingMessage) => Promise<void>
 ): Promise<void> {
-  const url = process.env.RABBITMQ_URL;
+  const url = envConfig().RABBITMQ_URL;
 
   if (!url) {
     throw new Error("RABBITMQ_URL not defined");

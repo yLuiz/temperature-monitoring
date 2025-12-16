@@ -28,16 +28,7 @@
       <span>Sensores Ativos</span>
       <strong>{totalSensors}</strong>
     </div>
-
-    <!-- <div class="stat-card">
-      <span>Temperatura Média</span>
-      <strong>{stats.avgTemperature}°C</strong>
-    </div>
-
-    <div class="stat-card">
-      <span>Umidade Média</span>
-      <strong>{stats.avgHumidity}%</strong>
-    </div> -->
+    
   </section>
 
   <section class="sensors" id="sensor-list">
