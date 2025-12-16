@@ -2,6 +2,10 @@ export interface ISensor {
     id: string;
     name: string;
     sensorCode: string;
+    minTemperature: number;
+    maxTemperature: number;
+    minHumidity: number;
+    maxHumidity: number;
 }
 
 export interface ISensorReading {

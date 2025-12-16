@@ -27,6 +27,30 @@ export class CreateSensors1765734466443 implements MigrationInterface {
                     isNullable: false
                 },
                 {
+                    name: "max_humidity",
+                    type: "float",
+                    isNullable: false,
+                    default: 0
+                },
+                {
+                    name: "min_humidity",
+                    type: "float",
+                    isNullable: false,
+                    default: 0
+                },
+                {
+                    name: "max_temperature",
+                    type: "float",
+                    isNullable: false,
+                    default: 0
+                },
+                {
+                    name: "min_temperature",
+                    type: "float",
+                    isNullable: false,
+                    default: 0
+                },
+                {
                     name: "created_at",
                     type: "timestamp",
                     default: "now()",

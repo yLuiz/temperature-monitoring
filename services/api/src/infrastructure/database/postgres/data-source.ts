@@ -5,8 +5,8 @@ import { Sensor } from "./entities/Sensor";
 import dotenv from "dotenv";
 import { DataSource, DataSourceOptions } from "typeorm";
 import { SeederOptions } from "typeorm-extension";
-import { SensorReading } from "./entities/SensorReadings";
 import { envConfig } from "../../../config/envConfig";
+import { SensorReading } from "./entities/SensorReadings";
 dotenv.config({ override: false });
 
 export const AppDataSource = new DataSource({

@@ -31,7 +31,7 @@ export async function connectRabbitMQ(
   // Fila específica do Notification Service
   await channel.assertQueue(
     QUEUES.NOTIFICATION,
-    { durable: false } 
+    { durable: false }
   );
 
   // Bind da fila à exchange

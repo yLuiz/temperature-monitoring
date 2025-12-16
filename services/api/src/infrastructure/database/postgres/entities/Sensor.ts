@@ -19,12 +19,40 @@ export class Sensor {
         type: "varchar"
     })
     sensor_code!: string;
-    
+
     @Column({
         nullable: false,
         type: "varchar"
     })
     name!: string;
+
+    @Column({
+        nullable: false,
+        type: "float",
+        default: 0
+    })
+    max_humidity!: number;
+
+    @Column({
+        nullable: false,
+        type: "float",
+        default: 0
+    })
+    min_humidity!: number;
+
+    @Column({
+        nullable: false,
+        type: "float",
+        default: 0
+    })
+    max_temperature!: number;
+
+    @Column({
+        nullable: false,
+        type: "float",
+        default: 0
+    })
+    min_temperature!: number;
 
     @OneToMany(() => SensorReading, reading => reading.sensor)
     readings!: SensorReading[];

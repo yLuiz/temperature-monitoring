@@ -1,10 +1,10 @@
 import { logger } from "../../../infrastructure/logger/logger";
-import { SensorReadingMessage } from "../../../infrastructure/messaging/rabbitmq.consumer";
+import { SensorReadingMessage } from "../../../infrastructure/messaging/rabbitmq";
 import { GetSensorByCodeUseCase } from "../sensors/get-sensor-by-code.use-case";
 import { RegisterSensorReadingUseCase } from "./register-sensor-reading.use-case";
 
 export class ProcessingReadingsConsumedUseCase {
-    
+
     private readonly _registerSensorReadingUseCase: RegisterSensorReadingUseCase;
     private readonly _getSensorByCodeUseCase: GetSensorByCodeUseCase;
 
@@ -27,11 +27,16 @@ export class ProcessingReadingsConsumedUseCase {
             return;
         }
 
-        await this._registerSensorReadingUseCase.execute({
-            sensor_id: sensor.id,
-            temperature: reading.temperature,
-            humidity: reading.humidity,
-            recorded_at: new Date(reading.timestamp)
-        });
+        try {
+            await this._registerSensorReadingUseCase.execute({
+                sensor_id: sensor.id,
+                temperature: reading.temperature,
+                humidity: reading.humidity,
+                recorded_at: new Date(reading.timestamp)
+            });
+        }
+        catch (error) {
+            console.error("Error processing sensor reading:", (error as any).message);
+        }
     }
 }

@@ -1,5 +1,5 @@
 import { ProcessingReadingsConsumedUseCase } from "../../application/use-cases/sensor-readings/processing-readings-consumed.use-case";
-import { startSensorReadingConsumer } from "./rabbitmq.consumer";
+import { startSensorReadingConsumer } from "./rabbitmq";
 
 const processingReadingsConsumedUseCase = new ProcessingReadingsConsumedUseCase();
 

@@ -11,6 +11,12 @@ export function startSensorSimulation() {
   logger.info("Starting sensor simulation");
 
   setInterval(() => {
+
+    if (!MockSensorsReading.sensors.length) {
+      logger.warn("No sensors available for simulation");
+      return;
+    }
+
     const readings: ISensorReadingToSend[] = MockSensorsReading.generate();
 
     for (const reading of readings) {
