@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import { errorHandler } from "./infrastructure/http/middlewares/error-handler.middleware";
 import { setupDustEngine } from "./infrastructure/view-engines/dust.engine";
 import { indexRoutes } from "./presentation/routes";
 
@@ -14,6 +15,6 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "dust");
 app.use("/public", express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRoutes);
+app.use("/", indexRoutes, errorHandler);
 
 export default app;
