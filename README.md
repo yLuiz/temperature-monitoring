@@ -1,90 +1,117 @@
-# Temperature Monitoring Platform
+# Plataforma de Monitoramento de Temperatura
 
-This project is a distributed temperature and humidity monitoring platform designed to demonstrate modern backend architecture, containerization, and orchestration concepts using Kubernetes.
+Este projeto é uma plataforma distribuída de monitoramento de temperatura e umidade, desenvolvida para demonstrar conceitos modernos de arquitetura backend, containerização e orquestração utilizando **Node.js, RabbitMQ, PostgreSQL e Kubernetes (via Kind)**.
 
-The solution simulates sensor data collection, asynchronous processing, and alert generation in a scalable microservices environment.
-
----
-
-## 🧩 Project Overview
-
-The platform is composed of independent services that communicate asynchronously, following principles of loose coupling and scalability. Each service has a well-defined responsibility, allowing the system to grow and evolve without tight dependencies.
-
-The main goal of this project is to showcase:
-- Microservices architecture
-- Asynchronous communication
-- Containerized applications
-- Kubernetes-based orchestration
-- Clean and maintainable code organization
+A solução simula a coleta de dados de sensores, o processamento assíncrono dessas informações e a geração de alertas em um ambiente de microserviços escalável e desacoplado.
 
 ---
 
-## 🏗️ Architecture
+## 🧩 Visão Geral do Projeto
 
-The system is structured around three core services:
 
-### API Service
-Acts as the central entry point of the platform. It is responsible for:
-- Managing registered sensors
-- Persisting sensor configuration and readings
-- Rendering a monitoring dashboard
-- Exposing endpoints for visualization and integration
+A plataforma é composta por serviços independentes que se comunicam de forma assíncrona, seguindo princípios de **baixo acoplamento, escalabilidade e resiliência**. Cada serviço possui uma responsabilidade bem definida, permitindo que o sistema evolua sem dependências rígidas entre componentes.
 
-### Sensor Service
-Simulates physical sensors by periodically generating temperature and humidity data. These readings are sent asynchronously to the messaging layer for further processing.
+O principal objetivo deste projeto é demonstrar, na prática:
 
-### Notification Service
-Consumes sensor readings and evaluates them against predefined thresholds. When limits are exceeded, alerts are generated and logged, demonstrating event-driven processing.
+- Arquitetura de microserviços
+- Comunicação assíncrona baseada em eventos
+- Aplicações containerizadas com Docker
+- Orquestração com Kubernetes
+- Organização de código limpa e sustentável
+- Experiência de setup automatizada para desenvolvedores
 
 ---
 
-## 🔄 Communication Flow
+## 🏗️ Arquitetura da Solução
 
-The services communicate using an asynchronous messaging approach. Sensor data is published to a message broker, allowing consumers to process information independently and reliably without direct coupling between services.
+O sistema é estruturado em três serviços principais:
 
-This design improves resilience, scalability, and fault isolation.
+### 🔹 API Service
+É o ponto central da aplicação e é responsável por:
+- Gerenciar sensores cadastrados
+- Persistir configurações e leituras de sensores
+- Expor endpoints para visualização e integração
+- Renderizar um dashboard simples de monitoramento
 
----
+### 🔹 Sensor Service
+Simula sensores físicos, gerando periodicamente dados de:
+- Temperatura
+- Umidade
 
-## 🐳 Containerization & Orchestration
+Esses dados são enviados de forma assíncrona para o RabbitMQ, sem comunicação direta com a API.
 
-All services are containerized to ensure consistent environments across development and deployment. Kubernetes is used to orchestrate these containers, providing:
-
-- Service discovery
-- Scaling via replicas
-- Self-healing through pod restarts
-- Declarative infrastructure management
-
-The project uses a local Kubernetes cluster for demonstration purposes, closely resembling real-world production setups.
-
----
-
-## 📦 Data Persistence
-
-A relational database is used to store sensor configurations and historical readings. This ensures data integrity and allows future expansion such as analytics, reporting, or auditing.
-
----
-
-## 🔧 Automation & Developer Experience
-
-The environment setup and lifecycle are automated to reduce manual effort and human error. This improves reproducibility and makes the project easy to run, test, and evaluate.
+### 🔹 Notification Service
+Consome as leituras dos sensores e:
+- Avalia os dados com base em limites configurados
+- Gera alertas quando os valores extrapolam os thresholds
+- Registra eventos de alerta, demonstrando processamento orientado a eventos
 
 ---
 
-## 🎯 Purpose of This Project
+## 🔄 Comunicação entre Serviços
 
-This project was developed as a technical exercise to demonstrate proficiency in:
+A comunicação entre os serviços ocorre por meio de **mensageria assíncrona com RabbitMQ**.
 
-- Backend development with Node.js
-- Event-driven architecture
-- Docker-based containerization
-- Kubernetes fundamentals
-- System design and infrastructure thinking
-
-It is intentionally designed to balance simplicity with real-world architectural patterns.
+Esse modelo:
+- Evita acoplamento direto entre serviços
+- Aumenta a tolerância a falhas
+- Facilita escalabilidade horizontal
+- Permite processamento independente dos eventos
 
 ---
 
-## 🏁 Conclusion
+## 🐳 Containerização e Kubernetes
 
-The Temperature Monitoring Platform serves as a concise yet complete example of how modern backend systems can be structured, deployed, and orchestrated using cloud-native principles. It reflects practical design decisions commonly applied in production-grade systems while remaining accessible and easy to understand.
+Todos os serviços são containerizados com Docker e orquestrados com **Kubernetes utilizando Kind (Kubernetes in Docker)**.
+
+O Kubernetes fornece:
+- Descoberta de serviços
+- Escalabilidade por meio de réplicas
+- Auto-recuperação de pods
+- Gerenciamento declarativo da infraestrutura
+
+O uso do Kind permite que o desenvolvedor execute o projeto localmente em um ambiente muito próximo de produção.
+
+---
+
+## 📦 Persistência de Dados
+
+A aplicação utiliza **PostgreSQL** para armazenar:
+- Configurações dos sensores
+- Histórico de leituras de temperatura e umidade
+
+As **migrations e seeds** são executadas automaticamente através de um **Job do Kubernetes**, garantindo que o ambiente esteja sempre pronto após o bootstrap.
+
+---
+
+## 🔧 Automação e Experiência do Desenvolvedor
+
+Todo o processo de setup foi pensado para ser **simples, automatizado e reproduzível**.
+
+Com apenas um script, o desenvolvedor consegue:
+- Criar o cluster Kubernetes
+- Buildar e carregar imagens Docker
+- Subir RabbitMQ e PostgreSQL
+- Executar migrations e seeds
+- Iniciar todos os serviços da aplicação
+
+Isso reduz erros manuais e facilita testes, estudos e avaliações técnicas.
+
+---
+
+## 🎯 Objetivo do Projeto
+
+Este projeto foi desenvolvido como um **exercício técnico** para demonstrar domínio em:
+
+- Desenvolvimento backend com Node.js
+- Arquitetura orientada a eventos
+- Mensageria com RabbitMQ
+- Containerização com Docker
+- Fundamentos de Kubernetes
+- Design de sistemas distribuídos
+
+A solução busca equilibrar simplicidade com padrões utilizados em ambientes reais de produção.
+
+## 🚀 Rodando o projeto.
+
+Para preparar o ambiente e rodar o projeto, acesse o arquivo Markdown **RUN-PROJECT.md**

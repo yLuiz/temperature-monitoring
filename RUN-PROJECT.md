@@ -10,17 +10,19 @@ Toda a infraestrutura e serviços são inicializados automaticamente através de
 
 Antes de iniciar, certifique-se de ter instalado:
 
-- Docker (Docker Desktop recomendado)
-- kubectl
-- Kind
-- Node.js (apenas para desenvolvimento local, não obrigatório para o deploy)
+- Docker (Docker Desktop recomendado) (Docker version 28.5.1, build e180ab8)
+- kubectl (Client Version: v1.34.1 | Kustomize Version: v5.7.1)
+- Kind (kind v0.30.0 go1.24.6 windows/amd64)
+- Node.js (v22.21.0)
 - PowerShell (Windows) ou terminal equivalente
 
 Verifique as versões:
 
+``` sh
 docker --version  
 kubectl version --client  
-kind version  
+kind version
+```
 
 ---
 
@@ -40,14 +42,18 @@ kind version
 
 ### 1️⃣ Clonar o repositório
 
-git clone https://github.com/yLuiz/temperature-monitoring.git
-cd temperature-monitoring  
+``` sh
+git clone https://github.com/yLuiz/temperature-monitoring.git 
+cd temperature-monitoring
+```
 
 ---
 
 ### 2️⃣ Executar o script de bootstrap
 
+``` sh
 ./scripts/k8s-up.ps1
+```
 
 Esse script:
 
@@ -63,38 +69,48 @@ Esse script:
 
 ### 3️⃣ Verificar pods
 
+``` sh
 kubectl get pods
-
+```
 ---
 
 ### 4️⃣ Logs (opcional)
 
+``` sh
 kubectl logs deploy/api  
-kubectl logs job/api-db-bootstrap  
+kubectl logs job/api-db-bootstrap 
+``` 
 
 ---
 
 ### 5️⃣ Acessar a aplicação
 
-kubectl port-forward svc/api 3000:3000 (mantenha o terminal aberto).
+``` sh
+# (mantenha o terminal aberto).
+kubectl port-forward svc/api 3000:3000
 
 http://localhost:3000
+```
 
 ---
 
 ## 🔄 Reexecutar migrations e seeds
 
+``` sh
 kubectl delete job api-db-bootstrap  
 kubectl apply -f k8s/api/job-bootstrap.yaml  
 kubectl wait --for=condition=complete job/api-db-bootstrap  
+```
 
 ---
 
 ## 🛑 Encerrar ambiente
 
+``` sh
 ./scripts/k8s-down.ps1
 
 kind delete cluster --name temp-monitoring  
+```
 
 ---
 

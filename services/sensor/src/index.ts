@@ -1,14 +1,15 @@
-import { ISensor, MockSensorsReading } from "./mocks/sensors.mock";
 import { logger } from "./modules/logger/logger";
-import { consumeSensorListUpdated } from "./modules/messaging/consume-sensor-list-updated";
-import { askForSensorListUpdate, connectRabbitMQ, consumeSensors } from "./modules/messaging/rabbitmq";
+import { initRabbitMQ } from "./modules/messaging/init-rabbitmq";
+import { askForSensorListUpdate } from "./modules/messaging/use-cases/ask-for-sensor-list-update";
+
+import { consumeSensorListUpdated } from "./modules/messaging/use-cases/consume-sensor-list-updated";
 import { startSensorSimulation } from "./modules/simulator/simulator";
 (async function bootstrap() {
   try {
 
     logger.info("Loading... [ Initializing Sensor Service... ]");
 
-    await connectRabbitMQ();
+    await initRabbitMQ();
     logger.info(">>> Sensor Service started successfully :D <<<");
 
     askForSensorListUpdate();

@@ -1,4 +1,4 @@
-import amqp, { Channel, ConsumeMessage } from "amqplib";
+import amqp, { Channel } from "amqplib";
 import { envConfig } from "../../config/envConfig";
 import { logger } from "../logger/logger";
 import {
@@ -9,18 +9,45 @@ import {
 
 let channel: Channel;
 
-export async function connectRabbitMQ(
-  onMessage: (payload: any) => Promise<void>
-): Promise<void> {
+export async function getChannel(): Promise<Channel> {
+  if (!channel) {
+    await connectRabbitMQ();
+  }
+
+  return channel;
+}
+
+let tries = 0;
+const maxRetries = 5;
+const retryDelayMs = 5000;
+
+export async function connectRabbitMQ(): Promise<void> {
   const url = envConfig().RABBITMQ_URL;
 
   if (!url) {
     throw new Error("RABBITMQ_URL not defined");
   }
 
-  const connection = await amqp.connect(url);
-  channel = await connection.createChannel();
+  try {
+    const connection = await amqp.connect(url);
+    channel = await connection.createChannel();
 
+    logger.info("Connected to RabbitMQ (topic exchange) and waiting for messages");
+  }
+  catch (error) {
+    logger.fatal(error, "Failed to connect to RabbitMQ");
+    if (tries < maxRetries) {
+      tries++;
+      logger.info(`Retrying to connect to RabbitMQ (${tries}/${maxRetries}) in ${retryDelayMs / 1000} seconds...`);
+      await new Promise((resolve) => setTimeout(resolve, retryDelayMs));
+      return connectRabbitMQ();
+    }
+  }
+
+
+}
+
+export async function setupRabbitMQChannel() {
   // Exchange do tipo topic
   await channel.assertExchange(
     EXCHANGES.SENSOR_READINGS,
@@ -41,29 +68,5 @@ export async function connectRabbitMQ(
     ROUTING_KEYS.SENSOR_READING_CREATED
   );
 
-  await channel.consume(
-    QUEUES.NOTIFICATION,
-    async (msg: ConsumeMessage | null) => {
-      if (!msg) return;
 
-      try {
-        const payload = JSON.parse(msg.content.toString());
-        await onMessage(payload);
-
-        channel.ack(msg);
-      } catch (error) {
-        logger.error(error, "Failed to process message");
-        channel.nack(msg, false, false); // descarta mensagem
-      }
-    }
-  );
-
-  logger.info(
-    {
-      exchange: EXCHANGES.SENSOR_READINGS,
-      queue: QUEUES.NOTIFICATION,
-      routingKey: ROUTING_KEYS.SENSOR_READING_CREATED
-    },
-    "Connected to RabbitMQ (topic exchange) and waiting for messages"
-  );
 }

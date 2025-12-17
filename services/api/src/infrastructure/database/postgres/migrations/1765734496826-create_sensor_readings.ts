@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { MigrationInterface, QueryRunner, Table, TableIndex } from "typeorm";
 
 export class CreateSensorReadings1765734496826 implements MigrationInterface {
 
@@ -47,9 +47,41 @@ export class CreateSensorReadings1765734496826 implements MigrationInterface {
             ]
         });
         await queryRunner.createTable(table);
+
+
+        // índice simples por sensor_id
+        await queryRunner.createIndex(
+            this._TABLE_NAME,
+            new TableIndex({
+                name: "IDX_SENSOR_READINGS_SENSOR_ID",
+                columnNames: ["sensor_id"]
+            })
+        );
+
+        // índice composto (sensor_id, recorded_at)
+        await queryRunner.createIndex(
+            this._TABLE_NAME,
+            new TableIndex({
+                name: "IDX_SENSOR_READINGS_SENSOR_ID_RECORDED_AT",
+                columnNames: ["sensor_id", "recorded_at"]
+            })
+        );
+
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
+
+        await queryRunner.dropIndex(
+            this._TABLE_NAME,
+            "IDX_SENSOR_READINGS_SENSOR_ID_RECORDED_AT"
+        );
+
+        await queryRunner.dropIndex(
+            this._TABLE_NAME,
+            "IDX_SENSOR_READINGS_SENSOR_ID"
+        );
+
+
         await queryRunner.dropTable(this._TABLE_NAME);
     }
 

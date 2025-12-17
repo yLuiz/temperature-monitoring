@@ -25,6 +25,19 @@ export type SensorListUpdatedMessage = {
 
 let channel: Channel;
 
+export async function getChannel(): Promise<Channel> {
+  if (!channel) {
+    await connectRabbitMQ();
+  }
+
+  return channel;
+}
+
+
+let tries = 0;
+const maxRetries = 5;
+const retryDelayMs = 5000;
+
 export async function connectRabbitMQ(): Promise<void> {
   try {
     const url = envConfig().RABBITMQ_URL;
@@ -33,127 +46,42 @@ export async function connectRabbitMQ(): Promise<void> {
     const connection = await amqp.connect(url);
     channel = await connection.createChannel();
 
-    await channel.assertExchange(EXCHANGES.SENSORS, "topic", { durable: true });
-    await channel.assertExchange(EXCHANGES.SENSOR_READINGS, "topic", { durable: true });
-
-    // Consumer declara fila
-    await channel.assertQueue(QUEUES.API_READINGS, { durable: true });
-
-    await channel.bindQueue(
-      QUEUES.API_READINGS,
-      EXCHANGES.SENSOR_READINGS,
-      ROUTING_KEYS.SENSOR_READING_CREATED
-    );
-
-    channel.prefetch(10);
-
-    await channel.assertQueue(QUEUES.SENSOR_LIST, { durable: true });
-
-    await channel.bindQueue(
-      QUEUES.SENSOR_LIST,
-      EXCHANGES.SENSORS,
-      ROUTING_KEYS.SENSOR_LIST_REQUEST,
-    );
 
     logger.info("Connected to RabbitMQ");
   } catch (error) {
     logger.fatal(error, "Failed to connect to RabbitMQ");
+
+    if (tries < maxRetries) {
+      tries++;
+      logger.info(`Retrying to connect to RabbitMQ (${tries}/${maxRetries}) in ${retryDelayMs / 1000} seconds...`);
+      await new Promise((resolve) => setTimeout(resolve, retryDelayMs));
+      return connectRabbitMQ();
+    }
+
     throw error;
   }
 }
 
-export async function startSensorReadingConsumer(
-  onMessage: (reading: SensorReadingMessage) => Promise<void>
-): Promise<void> {
+export async function setupRabbitMQChannel() {
+  await channel.assertExchange(EXCHANGES.SENSORS, "topic", { durable: true });
+  await channel.assertExchange(EXCHANGES.SENSOR_READINGS, "topic", { durable: true });
 
-  if (!channel) {
-    throw new Error("RabbitMQ channel not initialized");
-  }
+  // Consumer declara fila
+  await channel.assertQueue(QUEUES.API_READINGS, { durable: true });
 
-  await channel.consume(
+  await channel.bindQueue(
     QUEUES.API_READINGS,
-    async (msg: ConsumeMessage | null) => {
-      if (!msg) return;
-
-      try {
-        const payload = JSON.parse(
-          msg.content.toString()
-        ) as SensorReadingMessage;
-
-        await onMessage(payload);
-        channel.ack(msg);
-      } catch (error) {
-        logger.error(
-          error,
-          "Failed to process sensor reading"
-        );
-        channel.nack(msg, false, false);
-      }
-    }
+    EXCHANGES.SENSOR_READINGS,
+    ROUTING_KEYS.SENSOR_READING_CREATED
   );
 
-  logger.info(
-    {
-      exchange: EXCHANGES.SENSOR_READINGS,
-      queue: QUEUES.API_READINGS,
-    },
-    "API connected to RabbitMQ and consuming sensor readings"
-  );
-}
+  channel.prefetch(10);
 
-export async function publishSensorListUpdated(
-  sensors: Sensor[]
-): Promise<void> {
-  if (!channel) throw new Error("RabbitMQ channel not initialized");
+  await channel.assertQueue(QUEUES.SENSOR_LIST, { durable: true });
 
-  const payload: SensorListUpdatedMessage = {
-    sensors,
-    timestamp: new Date().toISOString(),
-  };
-
-  channel.publish(
-    EXCHANGES.SENSORS,
-    ROUTING_KEYS.SENSOR_LIST_UPDATED,
-    Buffer.from(JSON.stringify(payload)),
-    {
-      persistent: true,
-      contentType: "application/json",
-    }
-  );
-
-  logger.info(
-    { count: payload.sensors.length },
-    "Sensor list updated published"
-  );
-}
-
-export function consumeSensorListRequest(
-  onMessage: (payload: any) => Promise<void>
-): void {
-  if (!channel) {
-    throw new Error("RabbitMQ channel not initialized");
-  }
-
-  channel.consume(
+  await channel.bindQueue(
     QUEUES.SENSOR_LIST,
-    async (msg: ConsumeMessage | null) => {
-      if (!msg) return;
-      try {
-        const content = JSON.parse(msg.content.toString());
-        logger.info(
-          {
-            exchange: EXCHANGES.SENSORS,
-            routingKey: ROUTING_KEYS.SENSOR_LIST_REQUEST,
-          },
-          "Sensor list request consumed"
-        );
-
-        await onMessage(content);
-        channel.ack(msg);
-      } catch (error) {
-        logger.error(error, "Failed to process sensor list request");
-        channel.nack(msg, false, false); // DLQ futuramente
-      }
-    }
+    EXCHANGES.SENSORS,
+    ROUTING_KEYS.SENSOR_LIST_REQUEST,
   );
 }
