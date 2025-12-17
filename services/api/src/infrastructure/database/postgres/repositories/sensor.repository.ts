@@ -73,4 +73,4 @@ class SensorRepository {
 }
 
 export const SensorRepositoryInstance = new SensorRepository();
-export type ISensorRepository = SensorRepository;
+export type SensorRepositoryType = SensorRepository;

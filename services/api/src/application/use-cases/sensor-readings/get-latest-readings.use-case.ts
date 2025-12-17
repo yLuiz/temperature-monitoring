@@ -1,8 +1,8 @@
 import { Sensor } from "../../../infrastructure/database/postgres/entities/Sensor";
-import { ISensorRepository, SensorRepositoryInstance } from "../../../infrastructure/database/postgres/repositories/sensor.repository";
+import { SensorRepositoryType, SensorRepositoryInstance } from "../../../infrastructure/database/postgres/repositories/sensor.repository";
 
 export class GetLatestReadingsUseCase {
-    private readonly _sensorRepository: ISensorRepository;
+    private readonly _sensorRepository: SensorRepositoryType;
 
     constructor() {
         this._sensorRepository = SensorRepositoryInstance;

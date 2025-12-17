@@ -1,11 +1,15 @@
+import { SensorRepositoryType, SensorRepositoryInstance } from "../../../infrastructure/database/postgres/repositories/sensor.repository";
 import { CreateSensorInterface } from "../../interfaces/sensor/create-sensor.interface";
 
 export class RegisterSensorUseCase {
 
-    constructor() {}
+    private readonly _sensorRepository: SensorRepositoryType;
+
+    constructor() {
+        this._sensorRepository = SensorRepositoryInstance;
+    }
 
     async execute(sensorData: CreateSensorInterface): Promise<any> {
-        // Logic to register a new sensor with the provided sensorData
-        return {};
+        return await this._sensorRepository.create(sensorData);
     }
 }

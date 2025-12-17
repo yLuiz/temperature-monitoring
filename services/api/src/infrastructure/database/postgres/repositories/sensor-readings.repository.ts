@@ -48,4 +48,4 @@ class SensorReadingsRepository {
 }
 
 export const SensorReadingsRepositoryInstance = new SensorReadingsRepository();
-export type ISensorReadingsRepository = SensorReadingsRepository;
+export type SensorReadingsRepositoryType = SensorReadingsRepository;

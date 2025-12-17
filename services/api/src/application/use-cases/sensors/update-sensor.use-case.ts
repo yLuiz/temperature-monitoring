@@ -1,13 +1,15 @@
-import { ISensorRepository, SensorRepositoryInstance } from "../../../infrastructure/database/postgres/repositories/sensor.repository";
+import { SensorRepositoryType, SensorRepositoryInstance } from "../../../infrastructure/database/postgres/repositories/sensor.repository";
 import { UpdateSensorInterface } from "../../interfaces/sensor/update-sensor.interface";
 
 export class UpdateSensorUseCase {
 
-    private readonly _sensorRepository: ISensorRepository;
+    private readonly _sensorRepository: SensorRepositoryType;
     
     constructor() {
         this._sensorRepository = SensorRepositoryInstance;
     }
 
-    execute(sensorData: UpdateSensorInterface) { }
+    async execute(id: string, sensorData: UpdateSensorInterface) {
+        return await this._sensorRepository.update(id, sensorData);
+    }
 }

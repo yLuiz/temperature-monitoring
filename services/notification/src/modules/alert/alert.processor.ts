@@ -1,11 +1,5 @@
+import { ISensorReadingPayload } from "../../models/sensor-reading.payload";
 import { logger } from "../logger/logger";
-
-type SensorReading = {
-  sensorId: string;
-  temperature: number;
-  humidity: number;
-  timestamp: string;
-};
 
 // Limites simples
 // Em um cenário real, isso viria da API ou banco
@@ -20,15 +14,15 @@ const LIMITS = {
   }
 };
 
-export async function processSensorReading(reading: SensorReading) {
-  const { sensorId, temperature, humidity } = reading;
+export async function processSensorReading(reading: ISensorReadingPayload) {
+  const { sensorCode, temperature, humidity } = reading;
 
   if (
     temperature < LIMITS.temperature.min ||
     temperature > LIMITS.temperature.max
   ) {
     logger.warn(
-      { sensorId, temperature },
+      { sensorCode, temperature },
       "Temperature limit exceeded"
     );
   }
@@ -38,13 +32,13 @@ export async function processSensorReading(reading: SensorReading) {
     humidity > LIMITS.humidity.max
   ) {
     logger.warn(
-      { sensorId, humidity },
+      { sensorCode, humidity },
       "Humidity limit exceeded"
     );
   }
 
   logger.info(
-    { sensorId, temperature, humidity },
+    { sensorCode, temperature, humidity },
     "Sensor reading processed"
   );
 }
