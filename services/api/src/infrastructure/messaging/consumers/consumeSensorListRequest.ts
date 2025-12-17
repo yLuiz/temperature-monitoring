@@ -14,7 +14,7 @@ export async function consumeSensorListRequest(
     }
 
     channel.consume(
-        QUEUES.SENSOR_LIST,
+        QUEUES.SENSOR_LIST_REQUEST,
         async (msg: ConsumeMessage | null) => {
             if (!msg) return;
             try {

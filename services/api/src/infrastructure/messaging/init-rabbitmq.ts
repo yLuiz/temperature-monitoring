@@ -10,8 +10,8 @@ export async function initRabbitMQ() {
   await runRabbitMQConsumers();
 
   /* 
-   Teste de envio de sensors readings via RabbitMQ
-   */
+  //  Teste de envio de sensors readings via RabbitMQ
+  //  */
   const sensorsToSend = await SensorRepositoryInstance.getAll();
   await publishSensorListUpdated(sensorsToSend);
 

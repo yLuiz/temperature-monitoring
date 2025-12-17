@@ -4,7 +4,7 @@ import { getChannel } from "../rabbitmq";
 import { EXCHANGES, QUEUES, ROUTING_KEYS } from "../rabbitmq.constants";
 
 
-export async function consumeSensors(
+export async function onConsumeSensorsListUpdated(
     onMessage: (payload: any) => Promise<void>
 ): Promise<void> {
     
@@ -15,7 +15,7 @@ export async function consumeSensors(
     }
 
     channel.consume(
-        QUEUES.SENSOR_LIST,
+        QUEUES.SENSOR_LIST_UPDATED,
         async (msg: ConsumeMessage | null) => {
             if (!msg) return;
             try {

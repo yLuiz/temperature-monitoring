@@ -5,7 +5,8 @@ export const EXCHANGES = {
 
 export const QUEUES = {
   API_READINGS: "api.readings.queue",
-  SENSOR_LIST: "sensor.list.queue",
+  SENSOR_LIST_REQUEST: "sensor.list.request.queue",
+  SENSOR_LIST_UPDATED: "sensor.list.updated.queue",
 };
 
 export const ROUTING_KEYS = {

@@ -1,0 +1,150 @@
+.link-route {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 14px;
+  color: #2979ff;
+  text-decoration: none;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin: 16px 0 24px;
+}
+
+.btn-primary {
+  background: #00c16a;
+  border: none;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: #00a85a;
+}
+
+.sensor-card.manage {
+  background: #f0fdf9;
+  border: 1px solid #00c1a1;
+}
+
+.sensor-card header div span.code {
+  display: inline-block;
+  margin-top: 6px;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
+  border: none;
+  background: #fff;
+  border-radius: 8px;
+  padding: 6px 8px;
+  cursor: pointer;
+  font-size: 14px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.icon-btn.edit:hover {
+  background: #e3f2fd;
+}
+
+.icon-btn.delete:hover {
+  background: #fdecea;
+}
+
+.limits {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.limit label {
+  font-size: 13px;
+  color: #555;
+}
+
+.limit strong {
+  display: block;
+  font-size: 18px;
+  margin-top: 4px;
+}
+
+
+/* Modals */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-backdrop.active {
+  display: flex;
+}
+
+.modal {
+  background: #fff;
+  padding: 24px;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 480px;
+}
+
+.modal.small {
+  max-width: 360px;
+}
+
+.modal h2 {
+  margin-top: 0;
+}
+
+.modal label {
+  display: block;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+.modal input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.btn-secondary {
+  background: #eee;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+}
+
+.btn-danger {
+  background: #e53935;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+}

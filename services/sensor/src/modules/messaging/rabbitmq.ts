@@ -53,12 +53,15 @@ export async function setupRabbitMQChannel() {
   // Exchange onde este serviço publica leituras
   await channel.assertExchange(EXCHANGES.SENSOR_READINGS, "topic", { durable: true });
 
-  // Fila DESTE serviço
-  await channel.assertQueue(QUEUES.SENSOR_LIST, { durable: true });
+  // Declara fila para consumo de leituras solicitadas
+  await channel.assertQueue(QUEUES.SENSOR_LIST_UPDATED, { durable: true });
 
   // Bind APENAS para sensor.list.updated
+  // Essa bind é feita para que a fila SENSOR_LIST_UPDATED 
+  // possa ser consumida por este serviço para atualizar sua
+  //  lista de sensores em cache
   await channel.bindQueue(
-    QUEUES.SENSOR_LIST,
+    QUEUES.SENSOR_LIST_UPDATED,
     EXCHANGES.SENSORS,
     ROUTING_KEYS.SENSOR_LIST_UPDATED
   );

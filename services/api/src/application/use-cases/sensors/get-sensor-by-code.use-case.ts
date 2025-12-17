@@ -8,7 +8,11 @@ export class GetSensorByCodeUseCase {
         this._sensorRepository = SensorRepositoryInstance;
     }
 
-    async execute(sensorCode: string): Promise<Sensor | null> {
-        return await this._sensorRepository.getBySensorCode(sensorCode);
+    async execute(sensorCode: string): Promise<Sensor> {
+        const sensor = await this._sensorRepository.getBySensorCode(sensorCode);
+        if (!sensor) {
+            throw new Notification(`Sensor not found`);
+        }
+        return sensor;
     }
 }

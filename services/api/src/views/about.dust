@@ -12,7 +12,7 @@
 <body>
   <div class="page">
     <div class="container">
-
+    <a class="link-route" href="/">← Voltar ao Dashboard</a>
       <!-- Header -->
       <header class="header">
         <span class="badge">Sobre o Sistema</span>

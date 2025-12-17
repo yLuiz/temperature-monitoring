@@ -77,10 +77,11 @@ export async function setupRabbitMQChannel() {
 
   channel.prefetch(10);
 
-  await channel.assertQueue(QUEUES.SENSOR_LIST, { durable: true });
+  // Consumer para solicitações de lista de sensores
+  await channel.assertQueue(QUEUES.SENSOR_LIST_REQUEST, { durable: true });
 
   await channel.bindQueue(
-    QUEUES.SENSOR_LIST,
+    QUEUES.SENSOR_LIST_REQUEST,
     EXCHANGES.SENSORS,
     ROUTING_KEYS.SENSOR_LIST_REQUEST,
   );

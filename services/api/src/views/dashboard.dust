@@ -6,7 +6,7 @@
   <title>Temperature Monitoring</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <link rel="stylesheet" href="/public/css/toast.css">
+  <link rel="stylesheet" href="/public/css/toast.css" />
   <link rel="stylesheet" href="/public/css/dashboard.css" />
 </head>
 
@@ -16,7 +16,12 @@
 
   <header class="header">
     <h1>Temperature Monitoring</h1>
-    <a class="link-route" href="/about">Sobre o Sistema</a>
+    <nav>
+      <ul>
+        <li><a class="link-route" href="/sensor-management">Gerenciar Sensores</a></li>
+        <li><a class="link-route" href="/about">Sobre o Sistema</a></li>
+      </ul>
+    </nav>
     <p class="updated">
       Última atualização:
       <span id="last-updated">{lastUpdated}</span>
@@ -28,7 +33,7 @@
       <span>Sensores Ativos</span>
       <strong>{totalSensors}</strong>
     </div>
-    
+
   </section>
 
   <section class="sensors" id="sensor-list">
