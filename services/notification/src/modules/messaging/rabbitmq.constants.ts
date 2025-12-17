@@ -1,4 +1,5 @@
 export const EXCHANGES = {
+  SENSORS: "sensors.exchange",
   SENSOR_READINGS: "sensor.readings.exchange",
 };
 

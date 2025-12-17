@@ -15,7 +15,7 @@ export async function onConsumeSensorsListUpdated(
     }
 
     channel.consume(
-        QUEUES.SENSOR_LIST_UPDATED,
+        QUEUES.SENSOR_SERVICE_SENSOR_LIST_UPDATED,
         async (msg: ConsumeMessage | null) => {
             if (!msg) return;
             try {

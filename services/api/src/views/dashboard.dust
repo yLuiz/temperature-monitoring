@@ -16,7 +16,7 @@
 
   <header class="header">
     <h1>Temperature Monitoring</h1>
-    <nav>
+    <nav class="nav-links">
       <ul>
         <li><a class="link-route" href="/sensor-management">Gerenciar Sensores</a></li>
         <li><a class="link-route" href="/about">Sobre o Sistema</a></li>

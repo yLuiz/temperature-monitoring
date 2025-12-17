@@ -54,14 +54,14 @@ export async function setupRabbitMQChannel() {
   await channel.assertExchange(EXCHANGES.SENSOR_READINGS, "topic", { durable: true });
 
   // Declara fila para consumo de leituras solicitadas
-  await channel.assertQueue(QUEUES.SENSOR_LIST_UPDATED, { durable: true });
+  await channel.assertQueue(QUEUES.SENSOR_SERVICE_SENSOR_LIST_UPDATED, { durable: true });
 
   // Bind APENAS para sensor.list.updated
   // Essa bind é feita para que a fila SENSOR_LIST_UPDATED 
   // possa ser consumida por este serviço para atualizar sua
   //  lista de sensores em cache
   await channel.bindQueue(
-    QUEUES.SENSOR_LIST_UPDATED,
+    QUEUES.SENSOR_SERVICE_SENSOR_LIST_UPDATED,
     EXCHANGES.SENSORS,
     ROUTING_KEYS.SENSOR_LIST_UPDATED
   );

@@ -25,7 +25,7 @@ export async function publishSensorListUpdated(
             contentType: "application/json",
         }
     );
-
+    
     logger.info(
         { count: payload.sensors.length },
         "Sensor list updated published"

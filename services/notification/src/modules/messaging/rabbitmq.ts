@@ -43,14 +43,20 @@ export async function connectRabbitMQ(): Promise<void> {
       return connectRabbitMQ();
     }
   }
-
-
 }
 
 export async function setupRabbitMQChannel() {
+  channel.prefetch(10);
+
   // Exchange do tipo topic
   await channel.assertExchange(
     EXCHANGES.SENSOR_READINGS,
+    "topic",
+    { durable: true }
+  );
+
+  await channel.assertExchange(
+    EXCHANGES.SENSORS,
     "topic",
     { durable: true }
   );
