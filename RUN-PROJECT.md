@@ -65,6 +65,14 @@ Esse script:
 6. Executa migrations e seeds via Job  
 7. Sobe API, Sensor e Notification Services  
 
+Após o script finalizar, rode:
+```
+kubectl port-forward svc/api 3000:3000
+```
+
+E acesse em sua máquina:
+http://localhost:3000/dashboard
+
 ---
 
 ### 3️⃣ Verificar pods

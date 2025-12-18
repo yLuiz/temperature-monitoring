@@ -69,6 +69,7 @@
 
   <script src="/public/js/toast.js"></script>
   <script src="/public/js/dashboard.js"></script>
+  <script src="/public/js/sse.js"></script>
 </body>
 
 </html>

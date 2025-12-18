@@ -43,6 +43,16 @@ export class SensorServerController {
             }
         }
 
+        if (typeof body.name !== 'string' || body.name.trim() === '') {
+            res.status(400).json({ message: "Invalid value for field: name" });
+            return;
+        }
+
+        if (typeof body.sensor_code !== 'string' || body.sensor_code.trim() === '') {
+            res.status(400).json({ message: "Invalid value for field: sensor_code" });
+            return;
+        }
+
         const result = await this._registerSensorUseCase.execute(body);
         return res.json(result);
     }

@@ -1,6 +1,6 @@
 import { SensorRepositoryInstance } from "../../database/postgres/repositories/sensor.repository";
 import { logger } from "../../logger/logger";
-import { publishSensorListUpdated } from "../publishers/publishSensorListUpdated";
+import { publishSensorListUpdated } from "../publishers/publish-sensor-list-updated";
 
 export async function onConsumeSensorListRequest(payload: unknown): Promise<void> {
 

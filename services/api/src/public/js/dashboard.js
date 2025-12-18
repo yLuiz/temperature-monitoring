@@ -49,5 +49,5 @@
   }
 
   refresh();
-  setInterval(refresh, 1000);
+  setInterval(refresh, 5000);
 })();
