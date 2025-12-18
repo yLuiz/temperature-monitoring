@@ -127,6 +127,29 @@ async function handleSubmitSensor(event) {
   }
 }
 
+async function updateSensorsInNotificationService() {
+  try {
+    const response = await fetch("/api/sensors/update-notification-service", {
+      method: "POST",
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "Erro ao atualizar notificação de serviço");
+    }
+
+    toast.success({
+      title: "Sucesso",
+      description: "Notificação de serviço atualizada com sucesso",
+    });
+  } catch (error) {
+    toast.error({
+      title: "Erro",
+      description: error?.message,
+    });
+    console.error("Failed to update notification service:", error);
+  }
+}
+
 async function loadSensors() {
 
   try {

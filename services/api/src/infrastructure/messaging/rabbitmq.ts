@@ -65,6 +65,7 @@ export async function connectRabbitMQ(): Promise<void> {
 export async function setupRabbitMQChannel() {
   await channel.assertExchange(EXCHANGES.SENSORS, "topic", { durable: true });
   await channel.assertExchange(EXCHANGES.SENSOR_READINGS, "topic", { durable: true });
+  await channel.assertExchange(EXCHANGES.NOTIFICATION_SENSOR_ALERTS, "fanout", { durable: true });
 
   // Consumer declara fila
   await channel.assertQueue(QUEUES.API_READINGS, { durable: true });
@@ -85,4 +86,17 @@ export async function setupRabbitMQChannel() {
     EXCHANGES.SENSORS,
     ROUTING_KEYS.SENSOR_LIST_REQUEST,
   );
+
+  await channel.assertQueue(
+    QUEUES.NOTIFICATION_SENSOR_ALERT,
+    { durable: true }
+  );
+
+  // Bind da fila à exchange de alertas
+  await channel.bindQueue(
+    QUEUES.NOTIFICATION_SENSOR_ALERT,
+    EXCHANGES.NOTIFICATION_SENSOR_ALERTS,
+    ROUTING_KEYS.NOTIFICATION_SENSOR_ALERT
+  );
+
 }

@@ -1,13 +1,16 @@
 import { SensorRepositoryType, SensorRepositoryInstance } from "../../../infrastructure/database/postgres/repositories/sensor.repository";
 import { BadRequestException } from "../../../infrastructure/http/exceptions/BadRequestException";
 import { CreateSensorInterface } from "../../interfaces/sensor/create-sensor.interface";
+import { EmitSensorDatabaseUpdate } from "./emit-sensor-database-update";
 
 export class RegisterSensorUseCase {
 
     private readonly _sensorRepository: SensorRepositoryType;
+    private readonly _emitSensorDatabaseUpdate: EmitSensorDatabaseUpdate;
 
     constructor() {
         this._sensorRepository = SensorRepositoryInstance;
+        this._emitSensorDatabaseUpdate = new EmitSensorDatabaseUpdate();
     }
 
     async execute(sensorData: CreateSensorInterface): Promise<any> {
@@ -25,6 +28,10 @@ export class RegisterSensorUseCase {
             throw new BadRequestException(`Max temperature must be greater than min temperature`);
         }
 
-        return await this._sensorRepository.create(sensorData);
+        const sensorCreated = await this._sensorRepository.create(sensorData);
+
+        this._emitSensorDatabaseUpdate.execute();
+
+        return sensorCreated;
     }
 }

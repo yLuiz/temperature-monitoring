@@ -2,13 +2,16 @@ import { SensorRepositoryType, SensorRepositoryInstance } from "../../../infrast
 import { BadRequestException } from "../../../infrastructure/http/exceptions/BadRequestException";
 import { NotFoundException } from "../../../infrastructure/http/exceptions/NotFoundException";
 import { UpdateSensorInterface } from "../../interfaces/sensor/update-sensor.interface";
+import { EmitSensorDatabaseUpdate } from "./emit-sensor-database-update";
 
 export class UpdateSensorUseCase {
 
     private readonly _sensorRepository: SensorRepositoryType;
+    private readonly _emitSensorDatabaseUpdate: EmitSensorDatabaseUpdate;
 
     constructor() {
         this._sensorRepository = SensorRepositoryInstance;
+        this._emitSensorDatabaseUpdate = new EmitSensorDatabaseUpdate();
     }
 
     async execute(id: string, sensorData: UpdateSensorInterface) {
@@ -33,6 +36,10 @@ export class UpdateSensorUseCase {
             throw new BadRequestException(`Sensor with code ${sensorData.sensor_code} already exists`);
         }
 
-        return await this._sensorRepository.update(id, sensorData);
+        const updatedSensor = await this._sensorRepository.update(id, sensorData);
+
+        this._emitSensorDatabaseUpdate.execute();
+
+        return updatedSensor;
     }
 }

@@ -11,3 +11,4 @@ sensorServerRoutes.get("/:id", (req, res) => controller.getById(req, res));
 sensorServerRoutes.get("/code/:sensorCode", (req, res) => controller.getByCode(req, res));
 sensorServerRoutes.put("/:id", (req, res) => controller.update(req, res));
 sensorServerRoutes.delete("/:id", (req, res) => controller.delete(req, res));
+sensorServerRoutes.post("/update-notification-service", (req, res) => controller.notifyDatabaseUpdate(req, res));

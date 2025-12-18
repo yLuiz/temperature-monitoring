@@ -48,6 +48,13 @@ export async function connectRabbitMQ(): Promise<void> {
 export async function setupRabbitMQChannel() {
   channel.prefetch(10);
 
+  // Exchange para publicar o alerta
+  await channel.assertExchange(
+    EXCHANGES.NOTIFICATION_SENSOR_ALERTS,
+    "fanout",
+    { durable: true }
+  );
+
   // Exchange do tipo topic
   await channel.assertExchange(
     EXCHANGES.SENSOR_READINGS,
@@ -74,5 +81,18 @@ export async function setupRabbitMQChannel() {
     ROUTING_KEYS.SENSOR_READING_CREATED
   );
 
+  // Fila para atualizações da lista de sensores
+  await channel.assertQueue(
+    QUEUES.NOTIFICATION_SENSOR_LIST_UPDATED,
+    { durable: false }
+  );
+
+  // Bind da fila à exchange para atualizações da lista de sensores
+  await channel.bindQueue(
+    QUEUES.NOTIFICATION_SENSOR_LIST_UPDATED,
+    EXCHANGES.SENSORS,
+    ROUTING_KEYS.SENSOR_LIST_UPDATED
+  );
+  
 
 }

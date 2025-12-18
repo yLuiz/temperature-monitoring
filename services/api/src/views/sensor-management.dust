@@ -24,6 +24,9 @@
     <button class="btn-primary" onclick="openCreateModal()">
       + Adicionar Sensor
     </button>
+    <button class="btn-secondary" onclick="updateSensorsInNotificationService()">
+      Atualizar Notificação de Serviço
+    </button>
   </section>
 
   <section class="sensors" id="sensor-list">

@@ -7,6 +7,7 @@ import { GetSensorByCodeUseCase } from "../../../application/use-cases/sensors/g
 import { GetSensorByIdUseCase } from "../../../application/use-cases/sensors/get-sensor-by-id.use-case";
 import { RegisterSensorUseCase } from "../../../application/use-cases/sensors/register-sensor.use-case";
 import { UpdateSensorUseCase } from "../../../application/use-cases/sensors/update-sensor.use-case";
+import { EmitSensorDatabaseUpdate } from "../../../application/use-cases/sensors/emit-sensor-database-update";
 
 export class SensorServerController {
 
@@ -16,7 +17,7 @@ export class SensorServerController {
     private readonly _getSensorByCodeUseCase: GetSensorByCodeUseCase;
     private readonly _getSensorByIdUseCase: GetSensorByIdUseCase;
     private readonly _getAllSensorsUseCase: GetAllSensorsUseCase;
-
+    private readonly _emitSensorDatabaseUpdate: EmitSensorDatabaseUpdate;
 
     constructor() {
         this._registerSensorUseCase = new RegisterSensorUseCase();
@@ -25,6 +26,7 @@ export class SensorServerController {
         this._getSensorByIdUseCase = new GetSensorByIdUseCase();
         this._getSensorByCodeUseCase = new GetSensorByCodeUseCase();
         this._getAllSensorsUseCase = new GetAllSensorsUseCase();
+        this._emitSensorDatabaseUpdate = new EmitSensorDatabaseUpdate();
     }
 
     async create(req: Request, res: Response) {
@@ -87,5 +89,10 @@ export class SensorServerController {
         const sensors = await this._getAllSensorsUseCase.execute();
 
         return res.json(sensors);
+    }
+
+    async notifyDatabaseUpdate(req: Request, res: Response) {
+        await this._emitSensorDatabaseUpdate.execute();
+        return res.status(200).json({ message: "Sensor database update notification sent." });
     }
 }
