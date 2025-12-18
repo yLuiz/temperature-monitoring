@@ -1,4 +1,4 @@
-export interface ISensor {
+export interface ISensorInMemory {
     id: string;
     name: string;
     sensorCode: string;
@@ -8,29 +8,29 @@ export interface ISensor {
     maxHumidity: number;
 }
 
-export interface ISensorReading {
+export interface ISensorReadingInMemory {
     sensorId: string;
-    sensor: ISensor;
+    sensor: ISensorInMemory;
     temperature: number;
     humidity: number;
     updatedAt: string;
 }
 
 export interface IDatabase {
-    sensors: Record<string, ISensor>;
-    readings: Record<string, ISensorReading[]>;
+    sensors: Record<string, ISensorInMemory>;
+    readings: Record<string, ISensorReadingInMemory[]>;
 }
 
 export interface ISensorRepository {
-    getAll(): ISensor[];
-    getById(id: string): ISensor | undefined;
-    getByCode(sensorCode: string): ISensor | undefined;
-    save(sensor: ISensor): void;
+    getAll(): ISensorInMemory[];
+    getById(id: string): ISensorInMemory | undefined;
+    getByCode(sensorCode: string): ISensorInMemory | undefined;
+    save(sensor: ISensorInMemory): void;
 }
 
 export interface ISensorReadingRepository {
-    getBySensorId(sensorId: string): ISensorReading[];
-    save(reading: ISensorReading): void;
+    getBySensorId(sensorId: string): ISensorReadingInMemory[];
+    save(reading: ISensorReadingInMemory): void;
 }
 
 export class InMemoryDatabase {
@@ -55,7 +55,7 @@ export class InMemoryDatabase {
             return this.db.sensors[id];
         },
 
-        save: (sensor: ISensor) => {
+        save: (sensor: ISensorInMemory) => {
             this.db.sensors[sensor.id] = sensor;
         },
     };
@@ -66,7 +66,7 @@ export class InMemoryDatabase {
             return this.db.readings[sensorId] || [];
         },
 
-        save: (reading: ISensorReading) => {
+        save: (reading: ISensorReadingInMemory) => {
             if (!this.db.readings[reading.sensorId]) {
                 this.db.readings[reading.sensorId] = [];
             }

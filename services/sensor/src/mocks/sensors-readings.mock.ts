@@ -1,15 +1,8 @@
 import { ISensorReadingToSend } from "../models/sensor-reading.model";
+import { ISensor } from "../models/sensor.model";
 import { random } from "../utils/random.util";
 
-export interface ISensor { 
-    sensor_code: string, 
-    min_temperature: number, 
-    max_temperature: number, 
-    min_humidity: number, 
-    max_humidity: number 
-}
-
-export class MockSensorsReading {
+export class MockSensorsReadings {
     static generate(sensors: ISensor[]): ISensorReadingToSend[] {
         const now = new Date();
         const readings: ISensorReadingToSend[] = [];

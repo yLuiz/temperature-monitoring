@@ -6,7 +6,6 @@ export const EXCHANGES = {
 export const QUEUES = {
   API_READINGS: "api.readings.queue",
   SENSOR_LIST_REQUEST: "sensor.list.request.queue",
-  SENSOR_SERVICE_SENSOR_LIST_UPDATED: "sensor.service.sensor-list-updated.queue",
   NOTIFICATION_SENSOR_LIST_UPDATED: "notification.sensor-list-updated.queue",
   NOTIFICATION_SENSOR_LIST_REQUEST: "notification.sensor-list-request.queue",
 };

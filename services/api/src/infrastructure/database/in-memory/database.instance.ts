@@ -1,4 +1,4 @@
-import { InMemoryDatabase, ISensor } from "./in-memory-database";
+import { InMemoryDatabase, ISensorInMemory } from "./in-memory-database";
 
 export class DatabaseInstance extends InMemoryDatabase {
 
@@ -16,7 +16,7 @@ export class DatabaseInstance extends InMemoryDatabase {
     }
 
     private _seedSensors() {
-        const sensorsMock: ISensor[] = [
+        const sensorsMock: ISensorInMemory[] = [
             { id: "sensor-1", name: "Sensor 1", sensorCode: "SENSOR_001", maxHumidity: 70, minHumidity: 30, maxTemperature: 30, minTemperature: 15 },
             { id: "sensor-2", name: "Sensor 2", sensorCode: "SENSOR_002", maxHumidity: 70, minHumidity: 30, maxTemperature: 30, minTemperature: 15 },
             { id: "sensor-3", name: "Sensor 3", sensorCode: "SENSOR_003", maxHumidity: 70, minHumidity: 30, maxTemperature: 30, minTemperature: 15 },
