@@ -1,21 +1,23 @@
 import "reflect-metadata";
 
-import { Sensor } from "./entities/Sensor";
 
 import dotenv from "dotenv";
 import { DataSource, DataSourceOptions } from "typeorm";
 import { SeederOptions } from "typeorm-extension";
+import { envConfig } from "../../../config/envConfig";
+import { Alert } from "./entities/Alert";
+import { Sensor } from "./entities/Sensor";
 import { SensorReading } from "./entities/SensorReadings";
 dotenv.config({ override: false });
 
 export const AppDataSource = new DataSource({
     type: "postgres",
-    host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT),
-    username: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    entities: [Sensor, SensorReading],
+    host: envConfig().DB_HOST,
+    port: envConfig().DB_PORT,
+    username: envConfig().DB_USER,
+    password: envConfig().DB_PASSWORD,
+    database: envConfig().DB_NAME,
+    entities: [Alert, Sensor, SensorReading],
     migrations: ["dist/infrastructure/database/postgres/migrations/*.{js,ts}"],
     seeds: ["dist/infrastructure/database/postgres/seeds/*.{js,ts}"],
 

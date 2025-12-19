@@ -1,8 +1,8 @@
 import { Repository } from "typeorm";
-import { AppDataSource } from "../data-source";
-import { Sensor } from "../entities/Sensor";
 import { CreateSensorInterface } from "../../../../application/interfaces/sensor/create-sensor.interface";
 import { UpdateSensorInterface } from "../../../../application/interfaces/sensor/update-sensor.interface";
+import { AppDataSource } from "../data-source";
+import { Sensor } from "../entities/Sensor";
 
 class SensorRepository {
     private _sensorOrmRepository: Repository<Sensor>;
@@ -73,4 +73,4 @@ class SensorRepository {
 }
 
 export const SensorRepositoryInstance = new SensorRepository();
-export type ISensorRepository = SensorRepository;
+export type SensorRepositoryType = SensorRepository;

@@ -5,6 +5,10 @@ export const sensorServerRoutes = Router();
 
 const controller = new SensorServerController();
 
-sensorServerRoutes.get("/", (req, res) => {
-    res.json({ message: "Sensor Server Routes" });
-});
+sensorServerRoutes.post("/", (req, res) => controller.create(req, res));
+sensorServerRoutes.get("/", (req, res) => controller.getAll(req, res));
+sensorServerRoutes.get("/:id", (req, res) => controller.getById(req, res));
+sensorServerRoutes.get("/code/:sensorCode", (req, res) => controller.getByCode(req, res));
+sensorServerRoutes.put("/:id", (req, res) => controller.update(req, res));
+sensorServerRoutes.delete("/:id", (req, res) => controller.delete(req, res));
+sensorServerRoutes.post("/update-notification-service", (req, res) => controller.notifyDatabaseUpdate(req, res));

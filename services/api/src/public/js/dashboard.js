@@ -15,17 +15,17 @@
         <div class="metric">
           <label>Temperatura</label>
           <div class="bar">
-            <div class="fill temp" style="width:${s.temperature}%"></div>
+            <div class="fill temp" style="width:${s?.temperature ? s.temperature + "%" : "0%"}"></div>
           </div>
-          <strong class="value">${s.temperature}°C</strong>
+          <strong class="value">${s?.temperature ? s.temperature + "°C" : "N/A"}</strong>
         </div>
 
         <div class="metric">
           <label>Umidade</label>
           <div class="bar">
-            <div class="fill hum" style="width:${s.humidity}%"></div>
+            <div class="fill hum" style="width:${s?.humidity ? s.humidity + "%" : "0%"}"></div>
           </div>
-          <strong class="value">${s.humidity}%</strong>
+          <strong class="value">${s?.humidity ? s.humidity + "%" : "N/A"}</strong>
         </div>
       </div>
     `).join("");
@@ -42,11 +42,12 @@
       document.getElementById("last-updated").textContent =
         new Date().toLocaleString();
 
-    } catch (err) {
+    }
+    catch (err) {
       console.error("Erro ao atualizar sensores", err);
     }
   }
 
   refresh();
-  setInterval(refresh, 1000);
+  setInterval(refresh, 5000);
 })();

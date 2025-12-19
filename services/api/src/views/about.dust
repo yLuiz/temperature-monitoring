@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <title>Sobre - Sistema de Monitoramento</title>
-  <meta name="description" content="Saiba mais sobre o sistema de monitoramento de temperatura" />
+  <meta name="description" content="Detalhes técnicos sobre o sistema de monitoramento de temperatura" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/public/css/about.css" />
 </head>
 
 <body>
   <div class="page">
     <div class="container">
-
+    <a class="link-route" href="/">← Voltar ao Dashboard</a>
       <!-- Header -->
       <header class="header">
         <span class="badge">Sobre o Sistema</span>
         <h1>Sistema de Monitoramento de Temperatura</h1>
         <p class="subtitle">
-          Monitoramento em tempo real para garantir a segurança e eficiência
+          Plataforma de monitoramento em tempo real desenvolvida com foco em arquitetura, observabilidade e escalabilidade
         </p>
       </header>
 
@@ -26,12 +28,14 @@
         <div class="card">
           <div class="card-header">
             <h2>O que fazemos</h2>
-            <span class="card-description">Nossa missão</span>
+            <span class="card-description">Objetivo técnico do projeto</span>
           </div>
           <div class="card-content">
             <p>
-              Oferecemos uma solução completa de monitoramento de temperatura em tempo real,
-              permitindo acompanhar e controlar as condições ambientais com precisão e facilidade.
+              Este projeto foi desenvolvido para coletar, processar e visualizar dados de temperatura em tempo real,
+              simulando um cenário de produção com múltiplos serviços. O foco principal é validar decisões arquiteturais,
+              comunicação entre serviços e boas práticas de backend, incluindo tratamento de erros, logging estruturado
+              e monitoramento contínuo.
             </p>
           </div>
         </div>
@@ -39,14 +43,16 @@
         <div class="card">
           <div class="card-header">
             <h2>Recursos</h2>
-            <span class="card-description">Funcionalidades principais</span>
+            <span class="card-description">Funcionalidades implementadas</span>
           </div>
           <div class="card-content">
             <ul class="feature-list">
-              <li>Monitoramento em tempo real</li>
-              <li>Alertas personalizados</li>
-              <li>Histórico de dados</li>
-              <li>Interface intuitiva</li>
+              <li>Coleta e ingestão de dados de sensores em tempo real</li>
+              <li>Processamento assíncrono utilizando mensageria</li>
+              <li>Sistema de alertas baseado em regras configuráveis</li>
+              <li>Histórico de leituras com persistência em banco de dados</li>
+              <li>Dashboard para visualização e acompanhamento dos dados</li>
+              <li>Logging estruturado e rastreabilidade de requisições</li>
             </ul>
           </div>
         </div>
@@ -54,12 +60,15 @@
         <div class="card full">
           <div class="card-header">
             <h2>Tecnologia</h2>
-            <span class="card-description">Construído com as melhores ferramentas</span>
+            <span class="card-description">Stack e decisões técnicas</span>
           </div>
           <div class="card-content">
             <p>
-              Utilizamos tecnologias modernas e confiáveis para garantir performance, segurança e
-              escalabilidade. A plataforma é desenvolvida com Node.js, DustJS e outras tecnologias modernas.
+              A aplicação foi construída utilizando Node.js com Express, adotando uma arquitetura modular inspirada em
+              Clean Architecture. Para renderização server-side, é utilizado DustJS, enquanto a comunicação entre serviços
+              segue um modelo orientado a eventos. O projeto implementa logging estruturado com correlação de requisições,
+              tratamento centralizado de erros, métricas com Prometheus e dashboards de observabilidade com Grafana,
+              garantindo visibilidade e confiabilidade em ambientes distribuídos.
             </p>
           </div>
         </div>
@@ -69,7 +78,8 @@
       <!-- Footer -->
       <div class="card dashed">
         <p class="footer-text">
-          Para mais informações, entre em contato com nossa equipe de suporte.
+          Este projeto tem caráter técnico e experimental, com foco em estudo de arquitetura de microsserviços,
+          observabilidade e boas práticas de desenvolvimento backend.
         </p>
       </div>
 
@@ -78,4 +88,5 @@
 
   <script src="/public/js/about.js"></script>
 </body>
+
 </html>

@@ -10,6 +10,14 @@ body {
     color: #111;
 }
 
+.link-route {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 14px;
+    color: #2979ff;
+    text-decoration: none;
+}
+
 .page {
     min-height: 100vh;
     padding: 24px;
@@ -49,7 +57,7 @@ body {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
     gap: 24px;
 }
 

@@ -1,15 +1,18 @@
 import { Sensor } from "../../../infrastructure/database/postgres/entities/Sensor";
-import { ISensorRepository, SensorRepositoryInstance } from "../../../infrastructure/database/postgres/repositories/sensor.repository";
+import { SensorRepositoryType, SensorRepositoryInstance } from "../../../infrastructure/database/postgres/repositories/sensor.repository";
 
 export class GetSensorByCodeUseCase {
 
-    private readonly _sensorRepository: ISensorRepository;
-
+    private readonly _sensorRepository: SensorRepositoryType;
     constructor() {
         this._sensorRepository = SensorRepositoryInstance;
     }
 
-    async execute(sensorCode: string): Promise<Sensor | null> {
-        return this._sensorRepository.getBySensorCode(sensorCode);
+    async execute(sensorCode: string): Promise<Sensor> {
+        const sensor = await this._sensorRepository.getBySensorCode(sensorCode);
+        if (!sensor) {
+            throw new Notification(`Sensor not found`);
+        }
+        return sensor;
     }
 }

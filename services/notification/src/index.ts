@@ -1,14 +1,17 @@
-import { processSensorReading } from "./alert.processor";
-import { logger } from "./logger";
-import { connectRabbitMQ } from "./rabbitmq";
+
+import { logger } from "./modules/logger/logger";
+import { initRabbitMQ } from "./modules/messaging/init-rabbitmq";
+import { connectRabbitMQ } from "./modules/messaging/rabbitmq";
 
 (async function bootstrap() {
     try {
-        logger.info("Starting Notification Service");
+        logger.info("Loading... [ Initializing Notification Service... ]");
+        await connectRabbitMQ();
+        await initRabbitMQ();
 
-        await connectRabbitMQ(processSensorReading);
+        logger.info(">>> Notification Service started successfully :D <<<");
     } catch (error) {
-        logger.fatal({ error }, "Failed to start Notification Service");
+        logger.fatal(error, ">>> Failed to start Notification Service :( <<<");
         process.exit(1);
     }
 })();

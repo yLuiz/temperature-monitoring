@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Gerenciamento de Sensores</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="stylesheet" href="/public/css/dashboard.css" />
+  <link rel="stylesheet" href="/public/css/sensor-management.css" />
+  <link rel="stylesheet" href="/public/css/toast.css" />
+</head>
+
+<body>
+
+  <div id="toast-container"></div>
+
+  <header class="header">
+    <h1>Gerenciamento de Sensores</h1>
+    <a class="link-route" href="/">← Voltar ao Dashboard</a>
+  </header>
+
+  <section class="actions">
+    <button class="btn-primary" onclick="openCreateModal()">
+      + Adicionar Sensor
+    </button>
+    <button class="btn-secondary" onclick="updateSensorsInNotificationService()">
+      Atualizar Notificação de Serviço
+    </button>
+  </section>
+
+  <section class="sensors" id="sensor-list">
+    {#sensors}
+    <div class="sensor-card manage">
+
+      <header>
+        <div>
+          <h2>{name}</h2>
+          <span class="code">{sensor_code}</span>
+        </div>
+
+        <div class="card-actions">
+          <button class="icon-btn edit">✏️</button>
+          <button class="icon-btn delete">🗑️</button>
+        </div>
+      </header>
+
+      <div class="limits">
+        <div class="limit">
+          <label>Temperatura mínima</label>
+          <strong>{min_temperature}°C</strong>
+        </div>
+
+        <div class="limit">
+          <label>Temperatura máxima</label>
+          <strong>{max_temperature}°C</strong>
+        </div>
+
+        <div class="limit">
+          <label>Umidade mínima</label>
+          <strong>{min_humidity}%</strong>
+        </div>
+
+        <div class="limit">
+          <label>Umidade máxima</label>
+          <strong>{max_humidity}%</strong>
+        </div>
+      </div>
+
+    </div>
+    {/sensors}
+  </section>
+
+  <!-- Modals -->
+  <div class="modal-backdrop" id="sensor-modal">
+    <div class="modal">
+      <h2 id="modal-title">Adicionar Sensor</h2>
+
+      <form id="sensor-form" onsubmit="handleSubmitSensor(event)">
+        <input type="hidden" id="sensor-id" />
+
+        <label>Nome</label>
+        <input type="text" id="name" required />
+
+        <label>Código do Sensor</label>
+        <input type="text" id="sensor_code" required />
+
+        <div class="grid">
+          <div>
+            <label>Temp. mínima</label>
+            <input type="number" id="min_temperature" step="0.1" />
+          </div>
+          <div>
+            <label>Temp. máxima</label>
+            <input type="number" id="max_temperature" step="0.1" />
+          </div>
+          <div>
+            <label>Umid. mínima</label>
+            <input type="number" id="min_humidity" step="0.1" />
+          </div>
+          <div>
+            <label>Umid. máxima</label>
+            <input type="number" id="max_humidity" step="0.1" />
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" onclick="closeModal()">
+            Cancelar
+          </button>
+          <button type="submit" class="btn-primary">
+            Salvar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="delete-modal">
+    <div class="modal small">
+      <h2>Excluir Sensor</h2>
+      <p>Tem certeza que deseja excluir este sensor?</p>
+
+      <div class="modal-actions">
+        <button class="btn-secondary" onclick="closeDeleteModal()">
+          Cancelar
+        </button>
+        <button class="btn-danger" id="confirm-delete" onclick="handleDeleteSensor()">
+          Excluir
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="/public/js/toast.js"></script>
+  <script src="/public/js/sensor-management.js"></script>
+</body>
+
+</html>

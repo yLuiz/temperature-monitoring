@@ -8,4 +8,5 @@ data:
   DB_NAME: sensors # Dados de exemplo, não use em produção.
   DB_USER: sensors # Dados de exemplo, não use em produção.
   DB_PASSWORD: sensors # Dados de exemplo, não use em produção.
+  IS_RUNNING_IN_DOCKER: "true"
   RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672

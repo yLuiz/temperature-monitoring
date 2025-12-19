@@ -1,7 +1,8 @@
 import pino from "pino";
+import { envConfig } from "../../config/envConfig";
 
 export const logger = pino({
-  level: process.env.LOG_LEVEL || "info",
+  level: envConfig().LOG_LEVEL || "info",
   base: {
     service: "api-service"
   }

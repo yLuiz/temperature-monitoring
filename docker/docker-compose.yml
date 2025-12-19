@@ -1,5 +1,7 @@
 version: "3.9"
 
+# Docker Compose file for SYOS infrastructure (DEV environment)
+
 services:
   rabbitmq-syos:
     image: rabbitmq:3-management
@@ -20,10 +22,12 @@ services:
     container_name: postgres-syos
     ports:
       - "5432:5432"
+    env_file:
+      - .env
     environment:
-      POSTGRES_DB: syos_db
-      POSTGRES_USER: syos_user
-      POSTGRES_PASSWORD: syos_password
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
