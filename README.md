@@ -39,8 +39,8 @@ Simula sensores físicos, gerando periodicamente dados de:
 - Umidade
 
 Esses dados são enviados de forma assíncrona para o RabbitMQ, sem comunicação direta com a API.
-Segue o README do seviço:
-[Sensor Service Documentation](./services/sensor/README.md)
+- Segue o README do seviço:
+- [Sensor Service Documentation](./services/sensor/README.md)
 
 ### 🔹 Notification Service
 Consome as leituras dos sensores e:
@@ -102,8 +102,8 @@ Isso reduz erros manuais e facilita testes, estudos e avaliações técnicas.
 ---
 
 ## 🚀 Rodando o projeto.
-Para preparar o ambiente e rodar o projeto, acesse o arquivo Markdown **RUN-PROJECT.md**
-[RUN PROJETO Markdown](./RUN-PROJECT.md)
+- Para preparar o ambiente e rodar o projeto, acesse o arquivo Markdown **RUN-PROJECT.md**
+- Acesse: [RUN PROJETO Markdown](./RUN-PROJECT.md)
 
 ## 💻 Acesso a aplicação
 Após fazer todo o procedimento de deploy e rodar o comando:
