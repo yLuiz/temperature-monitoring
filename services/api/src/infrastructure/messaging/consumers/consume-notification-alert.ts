@@ -1,4 +1,4 @@
-import { SensorAlertInterface } from "../../../application/interfaces/notification/sensor-alert.interface";
+import { SensorAlertInterface } from "../../../application/interfaces/alert/sensor-alert.interface";
 import { getChannel } from "../rabbitmq";
 import { QUEUES } from "../rabbitmq.constants";
 

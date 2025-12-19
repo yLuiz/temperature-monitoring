@@ -8,6 +8,7 @@ import { GetSensorByIdUseCase } from "../../../application/use-cases/sensors/get
 import { RegisterSensorUseCase } from "../../../application/use-cases/sensors/register-sensor.use-case";
 import { UpdateSensorUseCase } from "../../../application/use-cases/sensors/update-sensor.use-case";
 import { EmitSensorDatabaseUpdate } from "../../../application/use-cases/sensors/emit-sensor-database-update";
+import { HttpStatusCode } from "../../../infrastructure/http/enums/HttpStatusCode";
 
 export class SensorServerController {
 
@@ -69,7 +70,7 @@ export class SensorServerController {
     async delete(req: Request, res: Response) {
         const { id } = req.params;
         await this._deleteSensorUseCase.execute(id);
-        return res.status(204).send();
+        return res.status(HttpStatusCode.NO_CONTENT).send();
     }
 
     async getById(req: Request, res: Response) {

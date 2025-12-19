@@ -3,16 +3,27 @@ import { logger } from "../logger/logger";
 import { publishSensorAlert } from "../messaging/publishers/publish-sensor-alert";
 import { getSensorByCodeInCache } from "../sensors/get-sensor-by-code-in-cache";
 
+export enum MetricTypeEnum {
+  TEMPERATURE = "TEMPERATURE",
+  HUMIDITY = "HUMIDITY"
+}
+
+export enum MetricParameterEnum {
+  MIN = "MIN",
+  MAX = "MAX"
+}
+
 export interface SensorAlertPayload {
   sensor_code: string;
   metric: {
-    type: "TEMPERATURE" | "HUMIDITY";
+    type: MetricTypeEnum;
     value: number;
+    limit: number;
+    parameter: MetricParameterEnum;
   };
   occurred_at: string;
   message: string;
 }
-
 
 export async function processSensorReading(reading: ISensorReadingPayload) {
   const { sensorCode, temperature, humidity } = reading;
@@ -24,11 +35,13 @@ export async function processSensorReading(reading: ISensorReadingPayload) {
     const payload: SensorAlertPayload = {
       sensor_code: sensorCode,
       metric: {
-        type: "TEMPERATURE",
+        type: MetricTypeEnum.TEMPERATURE,
         value: temperature,
+        limit: temperature < sensor.min_temperature ? sensor.min_temperature : sensor.max_temperature,
+        parameter: temperature < sensor.min_temperature ? MetricParameterEnum.MIN : MetricParameterEnum.MAX,
       },
       occurred_at: new Date().toISOString(),
-      message: `Temperature ${temperature}°C out of bounds (${sensor.min_temperature}°C - ${sensor.max_temperature}°C)`,
+      message: `Temperature ${temperature}°C out of bounds (${sensor.min_temperature}°C | ${sensor.max_temperature}°C)`,
     }
 
     publishSensorAlert(payload);
@@ -44,11 +57,13 @@ export async function processSensorReading(reading: ISensorReadingPayload) {
     const payload: SensorAlertPayload = {
       sensor_code: sensorCode,
       metric: {
-        type: "HUMIDITY",
+        type: MetricTypeEnum.HUMIDITY,
         value: humidity,
+        limit: humidity < sensor.min_humidity ? sensor.min_humidity : sensor.max_humidity,
+        parameter: humidity < sensor.min_humidity ? MetricParameterEnum.MIN : MetricParameterEnum.MAX,
       },
       occurred_at: new Date().toISOString(),
-      message: `Humidity ${humidity}% out of bounds (${sensor.min_humidity}% - ${sensor.max_humidity}%)`,
+      message: `Humidity ${humidity}% out of bounds (${sensor.min_humidity}% | ${sensor.max_humidity}%)`,
     }
 
     publishSensorAlert(payload);

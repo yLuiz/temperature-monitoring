@@ -1,11 +1,12 @@
 import {
-    Entity,
-    PrimaryGeneratedColumn,
     Column,
-    OneToMany,
     CreateDateColumn,
+    Entity,
+    OneToMany,
+    PrimaryGeneratedColumn,
     UpdateDateColumn
 } from "typeorm";
+import { Alert } from "./Alert";
 import { SensorReading } from "./SensorReadings";
 
 @Entity("sensors")
@@ -56,6 +57,9 @@ export class Sensor {
 
     @OneToMany(() => SensorReading, reading => reading.sensor)
     readings!: SensorReading[];
+
+    @OneToMany(() => Alert, alert => alert.sensor)
+    alerts!: Alert[];
 
     @CreateDateColumn()
     created_at!: Date;

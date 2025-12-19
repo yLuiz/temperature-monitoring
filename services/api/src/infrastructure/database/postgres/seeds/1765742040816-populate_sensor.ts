@@ -2,7 +2,7 @@ import { DataSource } from 'typeorm';
 import { Seeder, SeederFactoryManager } from 'typeorm-extension';
 import { Sensor } from '../entities/Sensor';
 
-type SensorSeed = Omit<Sensor, "id" | "readings" | "created_at" | "updated_at">;
+type SensorSeed = Omit<Sensor, "id" | "readings" | "alerts" | "created_at" | "updated_at">;
 
 export class PopulateSensor1765742040816 implements Seeder {
     track = true;

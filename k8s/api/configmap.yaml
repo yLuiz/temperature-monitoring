@@ -9,3 +9,7 @@ data:
   DB_USER: sensors # Dados de exemplo, não use em produção.
   DB_PASSWORD: sensors # Dados de exemplo, não use em produção.
   RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672
+  MODE: prod
+  PORT: 3000
+  LOG_LEVEL: info
+

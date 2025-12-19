@@ -1,3 +1,4 @@
+import { Sensor } from "../../../infrastructure/database/postgres/entities/Sensor";
 import { SensorRepositoryType, SensorRepositoryInstance } from "../../../infrastructure/database/postgres/repositories/sensor.repository";
 import { BadRequestException } from "../../../infrastructure/http/exceptions/BadRequestException";
 import { CreateSensorInterface } from "../../interfaces/sensor/create-sensor.interface";
@@ -13,7 +14,7 @@ export class RegisterSensorUseCase {
         this._emitSensorDatabaseUpdate = new EmitSensorDatabaseUpdate();
     }
 
-    async execute(sensorData: CreateSensorInterface): Promise<any> {
+    async execute(sensorData: CreateSensorInterface): Promise<Sensor> {
 
         const existingSensor = await this._sensorRepository.getBySensorCode(sensorData.sensor_code);
         if (existingSensor) {
