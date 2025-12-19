@@ -73,6 +73,11 @@ kubectl port-forward svc/api 3000:3000
 E acesse em sua máquina:
 http://localhost:3000/dashboard
 
+## 📝 Swagger (Documentação)
+Para visualizar os endpoints disponíveis, acesse:
+http://localhost:3000/api/docs
+
+
 ---
 
 ### 3️⃣ Verificar pods

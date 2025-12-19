@@ -99,6 +99,23 @@ Isso reduz erros manuais e facilita testes, estudos e avaliações técnicas.
 
 ---
 
+## 🚀 Deploy
+Para preparar o ambiente e rodar o projeto, acesse o arquivo Markdown **RUN-PROJECT.md**
+
+## 💻 Acesso a aplicação
+Após fazer todo o procedimento de deploy e rodar o comando:
+```
+kubectl port-forward svc/api 3000:3000
+```
+
+Acesse em sua máquina:
+http://localhost:3000/dashboard
+
+## 📝 Swagger (Documentação)
+Para visualizar os endpoints disponíveis, acesse:
+http://localhost:3000/api/docs
+
+
 ## 🎯 Objetivo do Projeto
 
 Este projeto foi desenvolvido como um **exercício técnico** para demonstrar domínio em:
@@ -113,5 +130,3 @@ Este projeto foi desenvolvido como um **exercício técnico** para demonstrar do
 A solução busca equilibrar simplicidade com padrões utilizados em ambientes reais de produção.
 
 ## 🚀 Rodando o projeto.
-
-Para preparar o ambiente e rodar o projeto, acesse o arquivo Markdown **RUN-PROJECT.md**
