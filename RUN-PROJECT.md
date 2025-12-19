@@ -127,6 +127,17 @@ kind delete cluster --name temp-monitoring
 
 ---
 
+
+## 🐙 Docker Compose
+Esteja com o Docker funcionando. (Requisito obrigatório).
+
+Para rodar a aplicação sem o Kubernetes, certifique-se de está na pasta raíz do projeto (./temperature-monitoring).
+E rode:
+```
+docker-compose up -d --build
+```
+
+
 ## ✅ Pronto
 
 Ambiente funcional para testes.

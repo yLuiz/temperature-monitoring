@@ -4,19 +4,22 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     ports:
-      - "5672:5672"
+      - "${RABBITMQ_PORT:-5672}:5672"
       - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-guest}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-guest}
     networks:
       - syos-dev-network
 
   postgres:
     image: postgres:15
     environment:
-      POSTGRES_DB: sensors
-      POSTGRES_USER: sensors
-      POSTGRES_PASSWORD: sensors
+      POSTGRES_DB: ${POSTGRES_DB:-sensors}
+      POSTGRES_USER: ${POSTGRES_USER:-sensors}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sensors}
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
@@ -25,18 +28,18 @@ services:
   api:
     build: ./services/api
     ports:
-      - "3000:3000"
+      - "${PORT:-3000}:3000"
     depends_on:
       - rabbitmq
       - postgres
     environment:
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_NAME: sensors
-      DB_USER: sensors
-      DB_PASSWORD: sensors
-      IS_RUNNING_IN_DOCKER: "true"
-      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672/
+      DB_HOST: ${DB_HOST:-postgres}
+      DB_PORT: ${DB_PORT:-5432}
+      DB_NAME: ${DB_NAME:-sensors}
+      DB_USER: ${DB_USER:-sensors}
+      DB_PASSWORD: ${DB_PASSWORD:-sensors}
+      IS_RUNNING_IN_DOCKER: ${IS_RUNNING_IN_DOCKER:-"true"}
+      RABBITMQ_URL: ${RABBITMQ_URL:-amqp://guest:guest@rabbitmq:5672/}
     networks:
       - syos-dev-network
 
@@ -45,8 +48,8 @@ services:
     depends_on:
       - rabbitmq
     environment:
-      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672/
-      SENSOR_INTERVAL_MS: 5000
+      RABBITMQ_URL: ${RABBITMQ_URL:-amqp://guest:guest@rabbitmq:5672/}
+      SENSOR_INTERVAL_MS: ${SENSOR_INTERVAL_MS:-5000}
     networks:
       - syos-dev-network
 
@@ -55,7 +58,7 @@ services:
     depends_on:
       - rabbitmq
     environment:
-      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672/
+      RABBITMQ_URL: ${RABBITMQ_URL:-amqp://guest:guest@rabbitmq:5672/}
     networks:
       - syos-dev-network
 
