@@ -11,7 +11,7 @@ dotenv.config({ override: false });
 */
 async function run() {
 
-    if (process.env.MODE === "dev") {
+    if (process.env.IS_RUNNING_IN_DOCKER === "false") {
         logger.error("[FATAL] >>> This script should not be run in development mode <<<");
         return;
     }

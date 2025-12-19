@@ -9,6 +9,7 @@
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "removeComments": false,
     "skipLibCheck": true,
     "sourceMap": true,
     "typeRoots": [

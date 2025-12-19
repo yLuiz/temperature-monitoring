@@ -65,7 +65,8 @@ export class PopulateSensor1765742040816 implements Seeder {
             const savedSensor = await sensorRepository.save(sensor);
             sensorsCreated.push(savedSensor);
         }
-
+        
         console.log('📡 Sensors created: ', sensorsCreated);
+        console.log(`\n\n==================================\n\n✅ Sensor seeding completed.\n\n==================================\n\n`);
     }
 }

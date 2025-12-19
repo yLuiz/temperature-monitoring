@@ -3,7 +3,26 @@ import swaggerUi from "swagger-ui-express";
 import { Express } from "express";
 import path from "node:path";
 
+import * as dotenv from "dotenv";
+dotenv.config({ override: false });
+
 export function setupSwagger(app: Express) {
+
+    const isRunningInDocker = process.env.IS_RUNNING_IN_DOCKER === "true";
+
+    const root = path.resolve(__dirname, "../../..");
+    console.log("Root path for Swagger:", root);
+
+    const apis = isRunningInDocker
+        ? [
+            path.join(root, "dist/presentation/routes/server/**/*.js"),
+            path.join(root, "dist/presentation/swagger/**/*.js"),
+        ]
+        : [
+            path.join(root, "src/presentation/routes/server/**/*.ts"),
+            path.join(root, "src/presentation/swagger/**/*.ts"),
+        ];
+
     const options: swaggerJsdoc.Options = {
         definition: {
             openapi: "3.0.0",
@@ -20,13 +39,7 @@ export function setupSwagger(app: Express) {
             ]
         },
 
-        apis: [
-            path.join(
-                process.cwd(),
-                "src/presentation/routes/server/**/*.ts"
-            ),
-            path.join(process.cwd(), "src/presentation/swagger/**/*.ts")
-        ]
+        apis
     };
 
     const swaggerSpec = swaggerJsdoc(options);

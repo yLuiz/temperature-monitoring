@@ -46,8 +46,7 @@ kubectl wait --for=condition=ready pod -l app=postgres --timeout=120s
 
 Write-Host "[KUBERNETES INFO] APPLY - API base (config + secrets + service)..."
 kubectl apply -f k8s/api/configmap.yaml
-kubectl apply -f k8s/api/secrets.yaml
-kubectl apply -f k8s/api/service.yaml
+# kubectl apply -f k8s/api/secrets.yaml
 
 
 

@@ -5,6 +5,9 @@ import dotenv from "dotenv";
 import { DataSource, DataSourceOptions } from "typeorm";
 import { SeederOptions } from "typeorm-extension";
 import { envConfig } from "../../../config/envConfig";
+import { Alert } from "./entities/Alert";
+import { Sensor } from "./entities/Sensor";
+import { SensorReading } from "./entities/SensorReadings";
 dotenv.config({ override: false });
 
 export const AppDataSource = new DataSource({
@@ -14,10 +17,7 @@ export const AppDataSource = new DataSource({
     username: envConfig().DB_USER,
     password: envConfig().DB_PASSWORD,
     database: envConfig().DB_NAME,
-    entities: [
-        "src/infrastructure/database/postgres/entities/*.{js,ts}", 
-        "dist/infrastructure/database/postgres/entities/*.{js,ts}"
-    ],
+    entities: [Alert, Sensor, SensorReading],
     migrations: ["dist/infrastructure/database/postgres/migrations/*.{js,ts}"],
     seeds: ["dist/infrastructure/database/postgres/seeds/*.{js,ts}"],
 
