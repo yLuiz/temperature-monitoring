@@ -6,6 +6,8 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    networks:
+      - syos-dev-network
 
   postgres:
     image: postgres:15
@@ -17,6 +19,8 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - syos-dev-network
 
   api:
     build: ./services/api
@@ -31,23 +35,33 @@ services:
       DB_NAME: sensors
       DB_USER: sensors
       DB_PASSWORD: sensors
-      RABBITMQ_URL: amqp://rabbitmq:5672
+      IS_RUNNING_IN_DOCKER: "true"
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672/
+    networks:
+      - syos-dev-network
 
   sensor:
     build: ./services/sensor
     depends_on:
       - rabbitmq
     environment:
-      RABBITMQ_URL: amqp://rabbitmq:5672
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672/
+      SENSOR_INTERVAL_MS: 5000
+    networks:
+      - syos-dev-network
 
   notification:
     build: ./services/notification
     depends_on:
       - rabbitmq
     environment:
-      RABBITMQ_URL: amqp://rabbitmq:5672
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672/
+    networks:
+      - syos-dev-network
 
 volumes:
   postgres_data:
 
-
+networks:
+  syos-dev-network:
+    driver: bridge
