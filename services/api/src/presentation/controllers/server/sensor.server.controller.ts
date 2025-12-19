@@ -9,6 +9,8 @@ import { RegisterSensorUseCase } from "../../../application/use-cases/sensors/re
 import { UpdateSensorUseCase } from "../../../application/use-cases/sensors/update-sensor.use-case";
 import { EmitSensorDatabaseUpdate } from "../../../application/use-cases/sensors/emit-sensor-database-update";
 import { HttpStatusCode } from "../../../infrastructure/http/enums/HttpStatusCode";
+import { Sensor } from "../../../infrastructure/database/postgres/entities/Sensor";
+import { BadRequestException } from "../../../infrastructure/http/exceptions/BadRequestException";
 
 export class SensorServerController {
 
@@ -30,70 +32,67 @@ export class SensorServerController {
         this._emitSensorDatabaseUpdate = new EmitSensorDatabaseUpdate();
     }
 
-    async create(req: Request, res: Response) {
+    async create(req: Request, res: Response): Promise<Response<Sensor>> {
         const body: CreateSensorInterface = req.body;
 
         if (!body) {
-            res.status(400).json({ message: "Invalid request body" });
-            return;
+            throw new BadRequestException("Request body is missing.");
         }
 
         const requiredFields = ['name', 'sensor_code', 'min_temperature', 'max_temperature', 'min_humidity', 'max_humidity'];
         for (const field of requiredFields) {
             if (body[field as keyof CreateSensorInterface] === undefined || body[field as keyof CreateSensorInterface] === null) {
-                res.status(400).json({ message: `Missing required field: ${field}` });
-                return;
+                throw new BadRequestException(`Missing required field: ${field}`);
             }
         }
 
         if (typeof body.name !== 'string' || body.name.trim() === '') {
-            res.status(400).json({ message: "Invalid value for field: name" });
-            return;
+            throw new BadRequestException("Invalid value for field: name");
         }
 
         if (typeof body.sensor_code !== 'string' || body.sensor_code.trim() === '') {
-            res.status(400).json({ message: "Invalid value for field: sensor_code" });
-            return;
+
+            throw new BadRequestException("Invalid value for field: sensor_code");
         }
 
         const result = await this._registerSensorUseCase.execute(body);
         return res.json(result);
     }
 
-    async update(req: Request, res: Response) {
+    async update(req: Request, res: Response): Promise<Response<Sensor>> {
         const { id } = req.params;
         const body: UpdateSensorInterface = req.body;
         const result = await this._updateSensorUseCase.execute(id, body);
         return res.json(result);
     }
 
-    async delete(req: Request, res: Response) {
+    async delete(req: Request, res: Response): Promise<Response<void>> {
         const { id } = req.params;
         await this._deleteSensorUseCase.execute(id);
         return res.status(HttpStatusCode.NO_CONTENT).send();
     }
 
-    async getById(req: Request, res: Response) {
+    async getById(req: Request, res: Response): Promise<Response<Sensor>> {
         const { id } = req.params;
         const sensor = await this._getSensorByIdUseCase.execute(id);
         return res.json(sensor);
     }
 
-    async getByCode(req: Request, res: Response) {
+    async getByCode(req: Request, res: Response): Promise<Response<Sensor>> {
         const { code } = req.params;
         const sensor = await this._getSensorByCodeUseCase.execute(code);
         return res.json(sensor);
     }
 
-    async getAll(req: Request, res: Response) {
+    async getAll(req: Request, res: Response): Promise<Response<Sensor[]>> {
 
         const sensors = await this._getAllSensorsUseCase.execute();
 
         return res.json(sensors);
     }
 
-    async notifyDatabaseUpdate(req: Request, res: Response) {
+    async notifyDatabaseUpdate(req: Request, res: Response): Promise<Response<{ message: string }>> {
         await this._emitSensorDatabaseUpdate.execute();
-        return res.status(200).json({ message: "Sensor database update notification sent." });
+        return res.json({ message: "Sensor database update notification sent." });
     }
 }

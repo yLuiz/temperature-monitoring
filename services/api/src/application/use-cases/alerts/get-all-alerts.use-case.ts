@@ -15,14 +15,13 @@ export class GetAllAlertsUseCase {
 
         const page = args.page ?? 1;
         const limit = args.limit ?? 10;
-        const take = alerts.length;
 
         const paginationResponse: PaginationResponseInterface<Alert> = {
             data: alerts,
-            take,
             limit,
             totalItems,
-            currentPage: page
+            currentPage: page,
+            lastPage: Math.ceil(totalItems / limit)
         };
 
         return paginationResponse;
