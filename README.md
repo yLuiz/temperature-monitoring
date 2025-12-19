@@ -99,7 +99,7 @@ Isso reduz erros manuais e facilita testes, estudos e avaliações técnicas.
 
 ---
 
-## 🚀 Deploy
+## 🚀 Rodando o projeto.
 Para preparar o ambiente e rodar o projeto, acesse o arquivo Markdown **RUN-PROJECT.md**
 
 ## 💻 Acesso a aplicação
@@ -128,5 +128,3 @@ Este projeto foi desenvolvido como um **exercício técnico** para demonstrar do
 - Design de sistemas distribuídos
 
 A solução busca equilibrar simplicidade com padrões utilizados em ambientes reais de produção.
-
-## 🚀 Rodando o projeto.
