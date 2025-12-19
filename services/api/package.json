@@ -8,6 +8,8 @@
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts | pino-pretty",
     "build": "tsc",
     "start": "node dist/index.js",
+    "start:prod": "node dist/infrastructure/database/db-reset.js && node dist/infrastructure/database/postgres/seeds/run-seeds.js && node dist/index.js",
+    "db:reset:prod": "ts-node src/infrastructure/database/db-reset.ts",
     "db:reset": "ts-node src/infrastructure/database/db-reset.ts",
     "db:deploy": "npm run db:reset && npm run seed:run:dev",
     "seed:generate": "npx typeorm-extension seed:create --root ./src/infrastructure/database/postgres/seeds/ --name",

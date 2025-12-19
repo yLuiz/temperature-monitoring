@@ -8,9 +8,10 @@ dotenv.config({ override: false });
 
 export function setupSwagger(app: Express) {
 
-    const isRunningInDocker = process.env.IS_RUNNING_IN_DOCKER === "true";
+    const isRunningInDocker = process.env.IS_RUNNING_IN_DOCKER ? (process.env.IS_RUNNING_IN_DOCKER === "true") : true;
 
     const root = path.resolve(__dirname, "../../..");
+    console.log("IS_RUNNING_IN_DOCKER:", isRunningInDocker);
     console.log("Root path for Swagger:", root);
 
     const apis = isRunningInDocker
@@ -22,6 +23,8 @@ export function setupSwagger(app: Express) {
             path.join(root, "src/presentation/routes/server/**/*.ts"),
             path.join(root, "src/presentation/swagger/**/*.ts"),
         ];
+
+        console.log("Swagger API paths:", apis);
 
     const options: swaggerJsdoc.Options = {
         definition: {

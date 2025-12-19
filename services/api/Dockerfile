@@ -24,6 +24,7 @@ WORKDIR /app
 
 # Código compilado
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/package.json ./package.json
 
 # IMPORTANTE: assets estáticos e views
 COPY --from=builder /app/src/views ./dist/views
@@ -33,4 +34,4 @@ COPY --from=builder /app/node_modules ./node_modules
 
 EXPOSE 3000
 
-CMD ["node", "dist/index.js"]
+CMD ["npm", "run", "start:prod"]
