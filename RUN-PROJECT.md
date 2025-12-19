@@ -137,6 +137,10 @@ E rode:
 docker-compose up -d --build
 ```
 
+### ❗❗❗ Importante ❗❗❗
+Não se esqueça de copiar e colar o arquivo ``.env.example`` e renome-lo para ``.env``
+Isso é importante para que variáveis sejam lidas corretamente pelo docker-compose.yml
+
 
 ## ✅ Pronto
 

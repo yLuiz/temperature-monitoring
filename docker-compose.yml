@@ -11,6 +11,8 @@ services:
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-guest}
     networks:
       - syos-dev-network
+    env_file:
+      - ./.env
 
   postgres:
     image: postgres:15
@@ -24,6 +26,8 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - syos-dev-network
+    env_file:
+      - ./.env
 
   api:
     build: ./services/api
@@ -42,6 +46,8 @@ services:
       RABBITMQ_URL: ${RABBITMQ_URL:-amqp://guest:guest@rabbitmq:5672/}
     networks:
       - syos-dev-network
+    env_file:
+      - ./.env
 
   sensor:
     build: ./services/sensor
@@ -52,6 +58,8 @@ services:
       SENSOR_INTERVAL_MS: ${SENSOR_INTERVAL_MS:-5000}
     networks:
       - syos-dev-network
+    env_file:
+      - ./.env
 
   notification:
     build: ./services/notification
@@ -61,6 +69,8 @@ services:
       RABBITMQ_URL: ${RABBITMQ_URL:-amqp://guest:guest@rabbitmq:5672/}
     networks:
       - syos-dev-network
+    env_file:
+      - ./.env
 
 volumes:
   postgres_data:
