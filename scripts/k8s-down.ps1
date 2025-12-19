@@ -17,6 +17,7 @@ kubectl delete -f k8s/postgres --ignore-not-found
 kubectl delete -f k8s/rabbitmq --ignore-not-found
 kubectl delete job api-db-bootstrap --ignore-not-found
 
+# Delete Kind cluster
 kind delete cluster --name $CLUSTER_NAME
 
 Write-Host "[OK] Kubernetes environment is down"
